@@ -69,7 +69,7 @@ class PWA {
 
 				 // Peut-être que ça devrait se retrouver directement dans le manifest.json ? Serait plus facile à configuer.
 				$overrideHomeLinks = isset($config['overrideHomeLinks']) && $config['overrideHomeLinks'] ? 'true': 'false';
-				$out->addHeadItem('inlineJS', '<script type="text/javascript">var wgPWAOverrideHomeLinks = '.$overrideHomeLinks.';</script>');
+				$out->addHeadItem('pwa-home-links-override', '<script type="text/javascript">var wgPWAOverrideHomeLinks = '.$overrideHomeLinks.';</script>');
 
 				return; // Skip all other PWA configurations.
 			}
