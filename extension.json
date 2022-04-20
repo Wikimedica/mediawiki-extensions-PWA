@@ -18,13 +18,14 @@
 		"PWAConfigs": {
 			"value": {
 				"default": {
-				"manifest": "MediaWiki:default-manifest.json",
-				"manifest_type": "article",
-				"patterns": ["/.*/"],
-				"overrideHomeLinks": false
+					"manifest": "MediaWiki:default-manifest.json",
+					"manifest_type": "article",
+					"patterns": ["/.*/"],
+					"overrideHomeLinks": false
 				}
 			},
-			"description": "Configurations for the PWAs availables in this MediaWiki installation."
+			"description": "Configurations for the PWAs availables in this MediaWiki installation.",
+			"merge_strategy": "provide_default"
 		}
 	},
 	"Hooks": {

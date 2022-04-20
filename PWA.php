@@ -27,6 +27,8 @@ class PWA {
 		// Loop over all configured PWAs to check which one we should use for the requested page.
 		foreach ($wgPWAConfigs as $name => $config)
 		{
+			if(!$config) { continue; } // If that PWA has been turned off (useful for disabling the default PWA [since the provide_default merge strategy only works in MW > 1.35.3]).
+
 			// Format the $pattern parameter.
 			if(!isset($config['patterns'])) {
 				wfDebugLog( 'PWA', "$name PWA missing the pattern configuration entry." );
