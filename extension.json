@@ -1,0 +1,34 @@
+{
+	"name": "PWA",
+	"version": "0.1a",
+	"author": [
+		"[https://www.mediawiki.org/wiki/User:Tinss Antoine Mercier-Linteau]"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:PWA",
+	"descriptionmsg": "PWA-extension-description",
+	"license-name": "GPL-2.0-or-later",
+	"type": "skin",
+	"requires": {
+		"MediaWiki": ">= 1.31.0"
+	},
+	"AutoloadClasses": {
+		"MediaWiki\\Extension\\PWA\\PWA": "PWA.php"
+	},
+	"config": {
+		"PWAConfigs": {
+			"value": {
+				"default": {
+				"manifest": "MediaWiki:default-manifest.json",
+				"manifest_type": "article",
+				"patterns": ["/.*/"],
+				"overrideHomeLinks": false
+				}
+			},
+			"description": "Configurations for the PWAs availables in this MediaWiki installation."
+		}
+	},
+	"Hooks": {
+		"BeforePageDisplay": "MediaWiki\\Extension\\PWA\\PWA::onBeforePageDisplay"
+	},
+	"manifest_version": 2
+}
