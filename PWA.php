@@ -71,6 +71,25 @@ class PWA {
 				$overrideHomeLinks = isset($config['overrideHomeLinks']) && $config['overrideHomeLinks'] ? 'true': 'false';
 				$out->addHeadItem('pwa-home-links-override', '<script type="text/javascript">var wgPWAOverrideHomeLinks = '.$overrideHomeLinks.';</script>');
 
+				// Set the apple-touch-icon (because iOS ignore the icon field in the manifest)
+				if(isset($config['apple-touch-icon']) && $config['apple-touch-icon']){
+					global $wgLogos;
+					$icon = $config['apple-touch-icon'];
+					if($icon == "wgLogos") { // Use the icon in wgLogos.
+						$icon = isset($wgLogos['icon']);
+					} // Else use the icon that has been set.
+
+					$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
+				}
+				
+				// Register the add-to-homescreen JS/CSS module.
+				$out->addModules('ext.PWA.add-to-homescreen');
+
+				// Register the PWA extension's JS which will then register the service worker.
+				$out->addModules('ext.PWA');
+
+				$out->addJsConfigVars('wgCurrentPWA', $name);
+
 				return; // Skip all other PWA configurations.
 			}
 		}

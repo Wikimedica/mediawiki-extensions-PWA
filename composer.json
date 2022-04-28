@@ -1,0 +1,28 @@
+{
+    "description": "Makes MediaWiki installations PWA compatible.",
+    "minimum-stability": "dev",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Antoine Mercier-Linteau",
+            "email": "antoine@bitsofmymind.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type":"package",
+            "package": {
+            "name": "docluv/add-to-homescreen",
+            "version":"master",
+            "source": {
+                "url": "https://github.com/docluv/add-to-homescreen.git",
+                "type": "git",
+                "reference":"master"
+                }
+            }
+        }
+    ],
+    "require": {
+        "docluv/add-to-homescreen": "master"
+    }
+}

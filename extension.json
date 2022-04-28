@@ -14,6 +14,23 @@
 	"AutoloadClasses": {
 		"MediaWiki\\Extension\\PWA\\PWA": "PWA.php"
 	},
+	"ResourceModules": {
+		"ext.PWA.add-to-homescreen": {
+			"localBasePath": "vendor/docluv/add-to-homescreen",
+			"remoteExtPath": "PWA/vendor/docluv/add-to-homescreen",
+			"scripts": ["src/addtohomescreen.js"],
+			"styles": ["style/addtohomescreen.css"],
+			"targets": ["mobile", "desktop"]
+		},
+		"ext.PWA": {
+			"localBasePath": "resources/ext.PWA",
+			"remoteExtPath": "PWA/resources/ext.PWA",
+			"scripts": ["PWA.js"],
+			"targets": ["mobile", "desktop"]
+		}
+	},
+	"ResourceFileModulePaths": {
+	},
 	"config": {
 		"PWAConfigs": {
 			"value": {
@@ -21,7 +38,8 @@
 					"manifest": "MediaWiki:default-manifest.json",
 					"manifest_type": "article",
 					"patterns": ["/.*/"],
-					"overrideHomeLinks": false
+					"overrideHomeLinks": false,
+					"apple-touch-icon": "wgLogo"
 				}
 			},
 			"description": "Configurations for the PWAs availables in this MediaWiki installation.",
@@ -30,6 +48,11 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "MediaWiki\\Extension\\PWA\\PWA::onBeforePageDisplay"
+	},
+	"MessagesDirs": {
+		"PWA": [
+			"i18n"
+		]
 	},
 	"manifest_version": 2
 }
