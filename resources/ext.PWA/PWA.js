@@ -14,8 +14,6 @@ if(!navigator.standalone || // Safari
     // Loads the add-to-homescreen vendor package (defined in vendor).
     mw.loader.using(["ext.PWA.add-to-homescreen"]).then(function() {
 
-        if(mw.config.get("wgMFAmc") != undefined) // Only defined in mobile mode.
-        {
             var platform;
             
             addToHomescreen({
@@ -36,12 +34,18 @@ if(!navigator.standalone || // Safari
                     }
                     
                     platform = p;
-                    $('#pwa-prompt').fadeIn(); // Show the install prompt.
+
+                    if(mw.config.get("wgMFAmc") != undefined) { // Only show the install prompt in mobile mode.
+                        $('#pwa-prompt').fadeIn(); // Show the install prompt.
+                    }
                 },
                 onBeforeInstallPrompt: function(platform) {
                     // Nothing done here, the beforeInstallPrompt event was halted by the addtohomescreen.js library so we can trigger it later.
                 }
             });
+
+        if(mw.config.get("wgMFAmc") != undefined) // Only defined in mobile mode.
+        {
 
             $('#pwa-install').click(function() {
                 // User clicked the install button.
