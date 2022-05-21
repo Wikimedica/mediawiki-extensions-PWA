@@ -1,3 +1,6 @@
 {
-    "PWA-extension-description": "Rend une installation MediaWiki compatible avec le standard [https://en.wikipedia.org/wiki/Progressive_web_application PWA]."
+    "PWA-extension-description": "Rend une installation MediaWiki compatible avec le standard [https://en.wikipedia.org/wiki/Progressive_web_application PWA].",
+    "PWA-install-prompt": "Installer l'application $1 ?",
+    "PWA-install-prompt-button-label": "Installer",
+    "PWA-add-to-home-screen": "Ajoutez $1 à votre écran d'accueil"
 }

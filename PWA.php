@@ -10,6 +10,8 @@
 
 namespace MediaWiki\Extension\PWA;
 
+use OOUI;
+
 /**
  * PWA extension class.
  */
@@ -22,11 +24,16 @@ class PWA {
 	*/
 	public function onBeforePageDisplay(&$out, &$skin) {
 
-		global $wgPWAConfigs;
+		global $wgPWAConfigs, $wgPWAMobileSkin, $wgScriptPath;
+
+		// Add a specific CSS stylesheet in standalone (PWA) mode depending on wether the desktop or mobile skin is used.
+		$out->addStyle($wgScriptPath.'/index.php?title=MediaWiki:'.($skin->getSkinName() == $wgMobileSkin ? 'PWA-mobile.css': 'PWA-common.css').'&action=raw&ctype=text/css', 'standalone');
+
+		// Register some JS and CSS for standalone mode. This code should be in the service worker but until I get a better grasp of how they work is will be included in every page.
+		$out->addModules('ext.PWA.standalone');
 
 		// Loop over all configured PWAs to check which one we should use for the requested page.
-		foreach ($wgPWAConfigs as $name => $config)
-		{
+		foreach ($wgPWAConfigs as $name => $config){
 			if(!$config) { continue; } // If that PWA has been turned off (useful for disabling the default PWA [since the provide_default merge strategy only works in MW > 1.35.3]).
 
 			// Format the $pattern parameter.
@@ -52,16 +59,12 @@ class PWA {
 					continue 2; // Misconfigured property, skip this PWA.
 				}
 
-				$manifest = $config['manifest'];
-				
-				// If the manifest is a wiki artile.
-				if(isset($config['manifest_type']) && $config['manifest_type'] == 'article'){
-					global $wgScriptPath;
-					$manifest = $wgScriptPath.'/index.php?title='.urlencode($manifest).'&action=raw&ctype=text/json';
-				}
-				// Else it's an URL
-				
-				$out->addHeadItem('pwa', '<link rel="manifest" href="'.$manifest.'" data-PWA-id="'.htmlspecialchars($name).'" />');
+				$manifestUrl = $config['manifest'];
+				$manifest = json_decode(wfMessage($manifestUrl)->text());
+
+				$manifestUrl = $wgScriptPath.'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json';
+
+				$out->addHeadItem('pwa', '<link rel="manifest" href="'.$manifestUrl.'" data-PWA-id="'.htmlspecialchars($name).'" />');
 				
 				/* Home links the interface can be overriden by the PWA. For example, if a PWA wans its home to be /wiki/MyPWAHome instead
 				 * of /wiki/Main_Page it can set this parameter to true so when a user clicks the wiki's logo, they are taken to the PWA home
@@ -71,16 +74,10 @@ class PWA {
 				$overrideHomeLinks = isset($config['overrideHomeLinks']) && $config['overrideHomeLinks'] ? 'true': 'false';
 				$out->addHeadItem('pwa-home-links-override', '<script type="text/javascript">var wgPWAOverrideHomeLinks = '.$overrideHomeLinks.';</script>');
 
-				// Set the apple-touch-icon (because iOS ignore the icon field in the manifest)
-				if(isset($config['apple-touch-icon']) && $config['apple-touch-icon']){
-					global $wgLogos;
-					$icon = $config['apple-touch-icon'];
-					if($icon == "wgLogos") { // Use the icon in wgLogos.
-						$icon = isset($wgLogos['icon']);
-					} // Else use the icon that has been set.
+				$icon = $manifest->icons[0]->src;
 
-					$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
-				}
+				// Set the apple-touch-icon (because iOS ignore the icon field in the manifest).
+				$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
 				
 				// Register the add-to-homescreen JS/CSS module.
 				$out->addModules('ext.PWA.add-to-homescreen');
@@ -88,11 +85,55 @@ class PWA {
 				// Register the PWA extension's JS which will then register the service worker.
 				$out->addModules('ext.PWA');
 
-				$out->addJsConfigVars('wgCurrentPWA', $name);
+				// Pass config parameters to mw.config so it can be fetch in JS.
+				$out->addJsConfigVars('wgCurrentPWAId', $name);
+				$out->addJsConfigVars('wgCurrentPWAName', $manifest->name);
+
+				// Add some more metas.
+				$out->addHeadItem('mobile-web-app-capable', '<meta name="mobile-web-app-capable" content="yes" />');
+				$out->addHeadItem('apple-mobile-web-app-capable', '<meta name="apple-mobile-web-app-capable" content="yes" />');
+				$out->addHeadItem('application-name', '<meta name="application-name" content="'.$name.'">');
+				$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.$name.'">');
+
+				$out->enableOOUI();
+				$btn = new OOUI\ButtonWidget( [
+					'label' => wfMessage('PWA-install-prompt-button-label')->text(),
+					'flags' => 'progressive',
+					'id' => "pwa-install"
+				] );
+
+				$out->prependHTML('
+				<div id="pwa-prompt" style="display:none;">
+					<div id="pwa-prompt-close" onclick="$(\'#pwa-prompt\').fadeOut();">X</div>
+					<table>
+						<tr>
+							<td><img src="'.$icon.'" with="50px" height="50px" /></td>
+							<td style="padding:10px;">'.wfMessage('PWA-install-prompt', $manifest->name).'</td>
+							<td>'.$btn.'</td>
+						</tr>
+					</table>
+				</div>');
 
 				return; // Skip all other PWA configurations.
 			}
 		}
 	}
 
+	/**
+	 * $register parser calls to display icons to install a specific PWA app.
+	 * @param OutputParser $parser  
+	*/
+	public static function onParserFirstCallInit( &$parser ) 
+	{
+		$parser->setFunctionHook('PWAInstallAndroid', __CLASS__.'::PWAInstallAndroid' );
+		$parser->setFunctionHook('PWAInstalliOS', __CLASS__.'::PWAInstalliOS' );
+		return true;
+	}
+
+	/**
+	 * Magic word handling method.
+	 * */
+	public static function PWAInstallAndroid( &$parser, $PWAId ) 
+	{
+	}
 }

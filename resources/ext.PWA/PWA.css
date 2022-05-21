@@ -1,0 +1,54 @@
+#pwa-prompt {
+  position: fixed; 
+  bottom:20px; 
+  left: 20px; 
+  background-color: white; 
+  border: 1px solid #a2a9b1; 
+  filter: drop-shadow(0 2px 1px rgba(0,0,0,0.3));
+  z-index: 10;
+  padding: 10px;
+  width: auto !important;
+}
+
+@media (max-width: 450px) {
+  #pwa-prompt {
+    max-width: 85%;
+  }
+}
+
+#pwa-prompt-close {
+  font-weight: bold; 
+  float:right; 
+  cursor: pointer; 
+  padding-left:10px;
+  font-size: 1.2em;
+}
+
+#pwa-overlay {
+  position: fixed; 
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); 
+  z-index: 11;
+  cursor: pointer; 
+}
+
+#pwa-overlay-text {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  font-size: 1.2em;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  text-align: center;
+  height: 100%;
+}
+
+#pwa-overlay-text > img {
+  height: 75%;
+  width: auto;
+}

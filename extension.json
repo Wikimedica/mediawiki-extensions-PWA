@@ -9,7 +9,8 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.31.0"
+		"MediaWiki": ">= 1.31.0",
+		"extensions": { "MobileFrontend": "*" }
 	},
 	"AutoloadClasses": {
 		"MediaWiki\\Extension\\PWA\\PWA": "PWA.php"
@@ -19,13 +20,21 @@
 			"localBasePath": "vendor/docluv/add-to-homescreen",
 			"remoteExtPath": "PWA/vendor/docluv/add-to-homescreen",
 			"scripts": ["src/addtohomescreen.js"],
-			"styles": ["style/addtohomescreen.css"],
 			"targets": ["mobile", "desktop"]
 		},
 		"ext.PWA": {
 			"localBasePath": "resources/ext.PWA",
 			"remoteExtPath": "PWA/resources/ext.PWA",
 			"scripts": ["PWA.js"],
+			"styles": ["PWA.css"],
+			"targets": ["mobile", "desktop"],
+			"messages": ["PWA-add-to-home-screen"]
+		},
+		"ext.PWA.standalone": {
+			"localBasePath": "resources/ext.PWA.standalone",
+			"remoteExtPath": "PWA/resources/ext.PWA.standalone",
+			"scripts": ["PWA.standalone.js"],
+			"styles": ["PWA.standalone.css"],
 			"targets": ["mobile", "desktop"]
 		}
 	},
@@ -44,10 +53,15 @@
 			},
 			"description": "Configurations for the PWAs availables in this MediaWiki installation.",
 			"merge_strategy": "provide_default"
+		},
+		"PWAMobileSkin": {
+			"value": { "default": "Minerva" },
+			"description": "Skin used for the mobile version, set to false if there is no such skin."
 		}
 	},
 	"Hooks": {
-		"BeforePageDisplay": "MediaWiki\\Extension\\PWA\\PWA::onBeforePageDisplay"
+		"BeforePageDisplay": "MediaWiki\\Extension\\PWA\\PWA::onBeforePageDisplay",
+		"ParserFirstCallInit": "MediaWiki\\Extension\\GetUserName\\GetUserName::onParserFirstCallInit"
 	},
 	"MessagesDirs": {
 		"PWA": [
