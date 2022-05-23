@@ -1,6 +1,6 @@
 # PWA MediaWiki extension
 
-PWA is an extension that allows deployments of PWAs (Progressive Web Application)  on MediaWiki installations.
+PWA is an extension that tranforms any MediaWiki installation into a PWA (Progressive Web Application).
 
 ## Developing and installing
 
