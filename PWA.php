@@ -141,7 +141,7 @@ class PWA {
 		return [
 			'<img class="pwa-install-button pwa-install-android" onclick="PWAAndroidInstall(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/android-install-'.$wgLanguageCode.'.svg" />',
 			'noparse' => true,
-			'isHTML' => false
+			'isHTML' => true
 		];
 	}
 
@@ -155,7 +155,7 @@ class PWA {
 		return [
 			'<img class="pwa-install-button pwa-install-ios" onclick="PWAiOSInstall(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/iOS-install-'.$wgLanguageCode.'.svg" />',
 			'noparse' => true,
-			'isHTML' => false
+			'isHTML' => true
 		];
 	}
 }

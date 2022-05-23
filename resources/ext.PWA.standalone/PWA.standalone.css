@@ -43,3 +43,6 @@
       background-position: 0 0;
     }
   }
+
+  #footer-places-desktop-toggle { display: none; }
+  .footer-places > .hlist-separated li:after { display:none; }
