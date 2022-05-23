@@ -158,16 +158,4 @@ class PWA {
 			'isHTML' => false
 		];
 	}
-
-	public static function onContentHandlerDefaultModelFor( \Title $title, &$model ) 
-	{
-		if($title->getNamespace() == NS_MEDIAWIKI && in_array($title->getText(), ['PWA-mobile.css', 'PWA-common.css']))
-		{
-			$model = CONTENT_MODEL_CSS;
-
-			return false; // Content model has changed.
-		}
-
-		return true; // Content model has not changed.
-	}
 }

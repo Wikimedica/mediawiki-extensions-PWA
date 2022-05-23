@@ -64,8 +64,7 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "MediaWiki\\Extension\\PWA\\PWA::onBeforePageDisplay",
-		"ParserFirstCallInit": "MediaWiki\\Extension\\PWA\\PWA::onParserFirstCallInit",
-		"ContentHandlerDefaultModelFor" : "MediaWiki\\Extension\\PWA\\PWA::onContentHandlerDefaultModelFor"
+		"ParserFirstCallInit": "MediaWiki\\Extension\\PWA\\PWA::onParserFirstCallInit"
 	},
 	"MessagesDirs": {
 		"PWA": [
