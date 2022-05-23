@@ -141,7 +141,7 @@ class PWA {
 		return [
 			'<img class="pwa-install-button pwa-install-android" onclick="PWAAndroidInstall(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/android-install-'.$wgLanguageCode.'.svg" />',
 			'noparse' => true,
-			'isHTML' => true
+			'isHTML' => false
 		];
 	}
 
@@ -155,7 +155,19 @@ class PWA {
 		return [
 			'<img class="pwa-install-button pwa-install-ios" onclick="PWAiOSInstall(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/iOS-install-'.$wgLanguageCode.'.svg" />',
 			'noparse' => true,
-			'isHTML' => true
+			'isHTML' => false
 		];
+	}
+
+	public static function onContentHandlerDefaultModelFor( \Title $title, &$model ) 
+	{
+		if($title->getNamespace() == NS_MEDIAWIKI && in_array($title->getText(), ['PWA-mobile.css', 'PWA-common.css']))
+		{
+			$model = CONTENT_MODEL_CSS;
+
+			return false; // Content model has changed.
+		}
+
+		return true; // Content model has not changed.
 	}
 }
