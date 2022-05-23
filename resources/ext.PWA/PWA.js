@@ -11,74 +11,23 @@ if(!navigator.standalone || // Safari
 {
     // App is not in standalone mode.
 
-    // Loads the add-to-homescreen vendor package (defined in vendor).
-    mw.loader.using(["ext.PWA.add-to-homescreen"]).then(function() {
+    window.PWAiOSInstall = function(id) {
+        /* Apple's mobile safari does not support native adding to homescreen. Instead, show the user a gif tell them how to add
+        * the app manually to their home screen. */
+        overlay = $('<div id="pwa-overlay" onclick="$(this).fadeOut();"><div id="pwa-overlay-text">'+ mw.message("PWA-add-to-home-screen", mw.config.get("wgCurrentPWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
+        $('body').append(overlay);
+    }
 
-            var platform;
-            
-            addToHomescreen({
-                appID: mw.config.get("wgCurrentPWAId"),
-                appName: mw.config.get("wgCurrentPWAName"),
-                debug: true,
-                autostart: true,
-                customPrompt: {
-                    title: "Installer ?",
-                    src: "meta/favicon-96x96.png",
-                    cancelMsg: "Pas maintenant",
-                    installMsg: "Installer"
-                },
-                onCanInstall: function(p, _i) {
-                    
-                    if(p.isStandalone) {
-                        return; // Already within the PWA app.
-                    }
-                    
-                    platform = p;
+    window.PWAAndroidInstall = function(id) {
+        if(window.deferredBeforeInstallPrompt) { window.deferredBeforeInstallPrompt.prompt(); } // Fire the stash event.
+    }
 
-                    if(mw.config.get("wgMFAmc") != undefined) { // Only show the install prompt in mobile mode.
-                        $('#pwa-prompt').fadeIn(); // Show the install prompt.
-                    }
-                },
-                onBeforeInstallPrompt: function(platform) {
-                    // Nothing done here, the beforeInstallPrompt event was halted by the addtohomescreen.js library so we can trigger it later.
-                }
-            });
+    // Initialize deferredPrompt for use later to show browser install prompt.
+    let deferredBeforeInstallPrompt;
 
-        if(mw.config.get("wgMFAmc") != undefined) // Only defined in mobile mode.
-        {
-
-            $('#pwa-install').click(function() {
-                // User clicked the install button.
-                
-                if(platform.isIDevice){ // If we are on a IDevice
-                    /* Apple's mobile safari does not support native adding to homescreen. Instead, show the user a gif tell them how to add
-                    * the app manually to their home screen. */
-                    overlay = $('<div id="pwa-overlay" onclick="$(this).fadeOut();"><div id="pwa-overlay-text">'+ mw.message("PWA-add-to-home-screen", mw.config.get("wgCurrentPWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
-                    $('body').append(overlay);
-                    $('#pwa-prompt').fadeOut(); // Hide the install prompt.
-
-                    return;
-                }
-
-                if(platform.beforeInstallPrompt) {
-                    return platform.beforeInstallPrompt.prompt() 
-                    .then( function ( evt ) { 
-                        debugger;
-                        // Wait for the user to respond to the prompt 
-                        return platform.beforeInstallPrompt.userChoice; } )
-                        .then( function ( choiceResult ) { //do stuff here 
-                        } ) 
-                    .catch( function ( err ) { 
-                        if ( err.message.indexOf( "user gesture" ) > -1 ) { 
-                            //recycle, but make sure there is a user gesture involved 
-                        } else if ( err.message.indexOf( "The app is already installed" ) > -1 ) { 
-                            //the app is installed, no need to prompt, but you may need to log or update state values 
-                        } else { 
-                            return err; 
-                        } 
-                    }); 
-                }
-            });
-        }
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault(); // Prevent the mini-infobar from appearing on mobile.
+        window.deferredBeforeInstallPrompt = e; // Stash the event so it can be triggered later.
+        console.log(`'beforeinstallprompt' event was fired.`);
     });
 }

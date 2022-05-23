@@ -95,7 +95,7 @@ class PWA {
 				$out->addHeadItem('application-name', '<meta name="application-name" content="'.$name.'">');
 				$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.$name.'">');
 
-				$out->enableOOUI();
+				/*$out->enableOOUI();
 				$btn = new OOUI\ButtonWidget( [
 					'label' => wfMessage('PWA-install-prompt-button-label')->text(),
 					'flags' => 'progressive',
@@ -112,7 +112,7 @@ class PWA {
 							<td>'.$btn.'</td>
 						</tr>
 					</table>
-				</div>');
+				</div>');*/
 
 				return; // Skip all other PWA configurations.
 			}
@@ -125,15 +125,37 @@ class PWA {
 	*/
 	public static function onParserFirstCallInit( &$parser ) 
 	{
-		$parser->setFunctionHook('PWAInstallAndroid', __CLASS__.'::PWAInstallAndroid' );
-		$parser->setFunctionHook('PWAInstalliOS', __CLASS__.'::PWAInstalliOS' );
+		$parser->setFunctionHook('PWAAndroidInstall', __CLASS__.'::PWAAndroidInstall' );
+		$parser->setFunctionHook('PWAiOSInstall', __CLASS__.'::PWAiOSInstall' );
+
 		return true;
 	}
 
 	/**
 	 * Magic word handling method.
 	 * */
-	public static function PWAInstallAndroid( &$parser, $PWAId ) 
+	public static function PWAAndroidInstall( &$parser, $PWAId = '', $height = 50 ) 
 	{
+		global $wgScriptPath, $wgLanguageCode;
+		
+		return [
+			'<img class="pwa-install-button pwa-install-android" onclick="PWAAndroidInstall(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/android-install-'.$wgLanguageCode.'.svg" />',
+			'noparse' => true,
+			'isHTML' => true
+		];
+	}
+
+	/**
+	 * Magic word handling method.
+	 * */
+	public static function PWAiOSInstall( &$parser, $PWAId = '', $height = 50 ) 
+	{
+		global $wgScriptPath, $wgLanguageCode;
+		
+		return [
+			'<img class="pwa-install-button pwa-install-ios" onclick="PWAiOSInstall(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/iOS-install-'.$wgLanguageCode.'.svg" />',
+			'noparse' => true,
+			'isHTML' => true
+		];
 	}
 }

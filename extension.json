@@ -59,9 +59,12 @@
 			"description": "Skin used for the mobile version, set to false if there is no such skin."
 		}
 	},
+	"ExtensionMessagesFiles": {
+		"PWAMagic": "PWA.i18n.php"
+	},
 	"Hooks": {
 		"BeforePageDisplay": "MediaWiki\\Extension\\PWA\\PWA::onBeforePageDisplay",
-		"ParserFirstCallInit": "MediaWiki\\Extension\\GetUserName\\GetUserName::onParserFirstCallInit"
+		"ParserFirstCallInit": "MediaWiki\\Extension\\PWA\\PWA::onParserFirstCallInit"
 	},
 	"MessagesDirs": {
 		"PWA": [

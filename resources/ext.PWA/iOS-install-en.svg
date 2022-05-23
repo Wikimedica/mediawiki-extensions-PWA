@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="539.85602"
+   height="160"
+   viewBox="0 -189.93 539.856 159.99999"
+   version="1.1"
+   id="svg35"
+   sodipodi:docname="iOS-install-en.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata41">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs39" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1600"
+     inkscape:window-height="863"
+     id="namedview37"
+     showgrid="false"
+     inkscape:zoom="90.509668"
+     inkscape:cx="316.29534"
+     inkscape:cy="163.4642"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g33" />
+  <g
+     transform="scale(4.00216,4.0011)"
+     id="g33">
+    <path
+       fill="#ffffff"
+       d="m 134.032,-12.199739 a 3.83,3.83 0 0 1 -3.834,3.8299992 H 4.729 A 3.835,3.835 0 0 1 0.89,-12.199739 v -30.543 a 3.84,3.84 0 0 1 3.839,-3.835 h 125.468 a 3.834,3.834 0 0 1 3.834,3.835 z"
+       id="path2" />
+    <path
+       fill="#a6a6a6"
+       d="M 130.198,-7.4787398 H 4.729 A 4.73,4.73 0 0 1 0,-12.199739 v -30.542 a 4.733,4.733 0 0 1 4.729,-4.726 h 125.468 a 4.735,4.735 0 0 1 4.729,4.726 v 30.542 c 0.002,2.6039992 -2.123,4.7209992 -4.728,4.7209992 z"
+       id="path4" />
+    <path
+       d="m 134.032,-12.199739 a 3.83,3.83 0 0 1 -3.834,3.8299992 H 4.729 A 3.835,3.835 0 0 1 0.89,-12.199739 v -30.543 a 3.84,3.84 0 0 1 3.839,-3.835 h 125.468 a 3.834,3.834 0 0 1 3.834,3.835 z"
+       id="path6"
+       style="display:inline" />
+    <path
+       fill="#ffffff"
+       d="m 27.992325,-26.796224 c -0.029,-3.223 2.639,-4.791 2.761,-4.864 -1.511,-2.203 -3.853,-2.504 -4.676,-2.528 -1.967,-0.207 -3.875,1.177 -4.877,1.177 -1.022,0 -2.565,-1.157 -4.228,-1.123 -2.14,0.033 -4.142,1.272 -5.24,3.196 -2.2660001,3.923 -0.576,9.688 1.595,12.859 1.086,1.554 2.355,3.287 4.016,3.226 1.625,-0.066 2.232,-1.035 4.193,-1.035 1.943,0 2.513,1.035 4.207,0.996 1.744,-0.027 2.842,-1.56 3.89,-3.127 1.255,-1.779 1.759,-3.533 1.779,-3.623 -0.04,-0.014 -3.386,-1.292 -3.42,-5.154 z m -3.2,-9.478 c 0.874,-1.093 1.472,-2.579999 1.306,-4.088999 -1.265,0.056 -2.847,0.875 -3.758,1.944 -0.806,0.942 -1.526,2.485999 -1.34,3.937999 1.421,0.106 2.88,-0.717 3.792,-1.793 z"
+       id="path8" />
+    <linearGradient
+       id="a"
+       gradientUnits="userSpaceOnUse"
+       x1="-23.235001"
+       y1="97.431"
+       x2="-23.235001"
+       y2="61.386002"
+       gradientTransform="matrix(4.0022,0,0,4.0011,191.95,-397.20375)">
+      <stop
+         offset="0"
+         stop-color="#1a1a1a"
+         stop-opacity=".1"
+         id="stop10" />
+      <stop
+         offset=".123"
+         stop-color="#212121"
+         stop-opacity=".151"
+         id="stop12" />
+      <stop
+         offset=".308"
+         stop-color="#353535"
+         stop-opacity=".227"
+         id="stop14" />
+      <stop
+         offset=".532"
+         stop-color="#575757"
+         stop-opacity=".318"
+         id="stop16" />
+      <stop
+         offset=".783"
+         stop-color="#858585"
+         stop-opacity=".421"
+         id="stop18" />
+      <stop
+         offset="1"
+         stop-color="#b3b3b3"
+         stop-opacity=".51"
+         id="stop20" />
+    </linearGradient>
+    <path
+       fill="url(#a)"
+       d="M 130.198,-47.467739 H 62.993 l 26.323,39.9889992 h 40.882 a 4.733,4.733 0 0 0 4.729,-4.7239992 v -30.539 a 4.734,4.734 0 0 0 -4.729,-4.726 z"
+       id="path23"
+       style="display:inline;fill:url(#a)" />
+    <g
+       fill="#ffffff"
+       id="g27"
+       style="display:inline"
+       transform="matrix(1.3613722,0,0,1.3613722,-40.420255,-62.252035)">
+      <text
+         xml:space="preserve"
+         style="font-size:9.99593px;line-height:1.25;font-family:sans-serif;word-spacing:0px;fill:#ffffff;stroke-width:0.249898"
+         x="76.295357"
+         y="28.922157"
+         id="text49"
+         transform="scale(0.99986755,1.0001325)"><tspan
+           sodipodi:role="line"
+           id="tspan47"
+           x="76.295357"
+           y="28.922157"
+           style="fill:#ffffff;stroke-width:0.249898" /></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14.5874px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.364685"
+         x="96.436424"
+         y="30.886179"
+         id="text53"
+         transform="scale(0.99986752,1.0001325)"><tspan
+           sodipodi:role="line"
+           id="tspan51"
+           x="96.436424"
+           y="30.886179"
+           style="stroke-width:0.364685"><tspan
+             style="font-weight:bold;stroke-width:0.364685"
+             id="tspan55">iOS</tspan></tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:9.99593px;line-height:1.25;font-family:sans-serif;word-spacing:0px;stroke-width:0.249898"
+       x="53.492294"
+       y="27.869875"
+       id="text45"
+       transform="scale(0.99986755,1.0001325)"><tspan
+         sodipodi:role="line"
+         id="tspan43"
+         x="53.492294"
+         y="27.869875"
+         style="stroke-width:0.249898" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14.5922px;line-height:0.95;font-family:sans-serif;word-spacing:0px;stroke-width:0.364806"
+       x="64.918465"
+       y="-28.651535"
+       id="text62"
+       transform="scale(0.99986752,1.0001325)"><tspan
+         sodipodi:role="line"
+         id="tspan60"
+         x="64.918465"
+         y="-28.651535"
+         style="line-height:0.95;text-align:center;text-anchor:middle;fill:#ffffff;stroke-width:0.364806">Install</tspan><tspan
+         sodipodi:role="line"
+         x="64.918465"
+         y="-14.788945"
+         style="line-height:0.95;text-align:center;text-anchor:middle;fill:#ffffff;stroke-width:0.364806"
+         id="tspan64">on</tspan></text>
+  </g>
+</svg>
