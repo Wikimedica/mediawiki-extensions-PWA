@@ -95,32 +95,13 @@ class PWA {
 				$out->addHeadItem('application-name', '<meta name="application-name" content="'.$name.'">');
 				$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.$name.'">');
 
-				/*$out->enableOOUI();
-				$btn = new OOUI\ButtonWidget( [
-					'label' => wfMessage('PWA-install-prompt-button-label')->text(),
-					'flags' => 'progressive',
-					'id' => "pwa-install"
-				] );
-
-				$out->prependHTML('
-				<div id="pwa-prompt" style="display:none;">
-					<div id="pwa-prompt-close" onclick="$(\'#pwa-prompt\').fadeOut();">X</div>
-					<table>
-						<tr>
-							<td><img src="'.$icon.'" with="50px" height="50px" /></td>
-							<td style="padding:10px;">'.wfMessage('PWA-install-prompt', $manifest->name).'</td>
-							<td>'.$btn.'</td>
-						</tr>
-					</table>
-				</div>');*/
-
 				return; // Skip all other PWA configurations.
 			}
 		}
 	}
 
 	/**
-	 * $register parser calls to display icons to install a specific PWA app.
+	 * Register parser calls to display icons to install a specific PWA app.
 	 * @param OutputParser $parser  
 	*/
 	public static function onParserFirstCallInit( &$parser ) 
