@@ -16,12 +16,6 @@
 		"MediaWiki\\Extension\\PWA\\PWA": "PWA.php"
 	},
 	"ResourceModules": {
-		"ext.PWA.add-to-homescreen": {
-			"localBasePath": "vendor/docluv/add-to-homescreen",
-			"remoteExtPath": "PWA/vendor/docluv/add-to-homescreen",
-			"scripts": ["src/addtohomescreen.js"],
-			"targets": ["mobile", "desktop"]
-		},
 		"ext.PWA": {
 			"localBasePath": "resources/ext.PWA",
 			"remoteExtPath": "PWA/resources/ext.PWA",
@@ -45,13 +39,10 @@
 			"value": {
 				"default": {
 					"manifest": "MediaWiki:default-manifest.json",
-					"manifest_type": "article",
-					"patterns": ["/.*/"],
-					"overrideHomeLinks": false,
-					"apple-touch-icon": "wgLogo"
+					"patterns": ["/.*/"]
 				}
 			},
-			"description": "Configurations for the PWAs availables in this MediaWiki installation.",
+			"description": "Configurations for the PWAs available in this MediaWiki installation.",
 			"merge_strategy": "provide_default"
 		},
 		"PWAMobileSkin": {
