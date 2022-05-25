@@ -23,11 +23,16 @@
 			"targets": ["mobile", "desktop"],
 			"messages": ["PWA-add-to-home-screen"]
 		},
-		"ext.PWA.standalone": {
+		"ext.PWA.standalone.js": {
 			"localBasePath": "resources/ext.PWA.standalone",
 			"remoteExtPath": "PWA/resources/ext.PWA.standalone",
 			"scripts": ["PWA.standalone.js"],
-			"styles": ["PWA.standalone.css"],
+			"targets": ["mobile", "desktop"]
+		},
+		"ext.PWA.standalone.css": {
+			"localBasePath": "resources/ext.PWA.standalone",
+			"remoteExtPath": "PWA/resources/ext.PWA.standalone",
+			"styles": {"PWA.standalone.css": {"media": "standalone"}},
 			"targets": ["mobile", "desktop"]
 		}
 	},

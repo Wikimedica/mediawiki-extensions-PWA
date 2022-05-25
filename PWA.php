@@ -30,7 +30,8 @@ class PWA {
 		$out->addStyle($wgScriptPath.'/index.php?title=MediaWiki:'.($skin->getSkinName() == $wgMobileSkin ? 'PWA-mobile.css': 'PWA-common.css').'&action=raw&ctype=text/css', 'standalone');
 
 		// Register some JS and CSS for standalone mode. This code should be in the service worker but until I get a better grasp of how they work is will be included in every page.
-		$out->addModules('ext.PWA.standalone');
+		$out->addModuleStyles('ext.PWA.standalone.css'); // Add the CSS before the JS is loaded.
+		$out->addModules('ext.PWA.standalone.js'); // This will add the JS.
 
 		// Loop over all configured PWAs to check which one we should use for the requested page.
 		foreach ($wgPWAConfigs as $name => $config){
@@ -51,7 +52,7 @@ class PWA {
 			// Check if the current page's title matches the pattern.
 			foreach($patterns as $pattern)
 			{
-				$pattern = str_replace(' ', '_', $pattern); // Space and _ are considered equivalent in page titles.
+				$pattern = str_replace('_', ' ', $pattern); // Space and _ are considered equivalent in page titles, Title does no include _ in page names.
 				
 				if(!preg_match($pattern, $title)) { continue; }
 				// The PWA matches the title.
