@@ -11,7 +11,24 @@ if(!navigator.standalone || // Safari
 {
     // App is not in standalone mode.
 
+    // Enable the install button for the currently active PWA.
+    $(".pwa-" + mw.config.get("wgCurrentPWAId") + "-install-button").removeClass("pwa-disabled-install-button");
+
+    window.validateCanInstallPWA = function(id) {
+        if(id != mw.config.get("wgCurrentPWAId")){
+
+            alert(mw.message("PWA-cannot-install", mw.config.get("wgCurrentPWAName")));
+
+            return false; // Cannot install.
+        }
+
+        return true; // Can install.
+    }
+
     window.PWAiOSInstall = function(id) {
+        
+        if(!validateCanInstallPWA(id)) { return; }
+
         /* Apple's mobile safari does not support native adding to homescreen. Instead, show the user a gif tell them how to add
         * the app manually to their home screen. */
         overlay = $('<div id="pwa-overlay" onclick="$(this).fadeOut();"><div id="pwa-overlay-text">'+ mw.message("PWA-add-to-home-screen", mw.config.get("wgCurrentPWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
@@ -19,6 +36,9 @@ if(!navigator.standalone || // Safari
     }
 
     window.PWAAndroidInstall = function(id) {
+
+        if(!validateCanInstallPWA(id)) { return; }
+
         if(window.deferredBeforeInstallPrompt) { window.deferredBeforeInstallPrompt.prompt(); } // Fire the stash event.
     }
 

@@ -21,7 +21,7 @@
 			"scripts": ["PWA.js"],
 			"styles": ["PWA.css"],
 			"targets": ["mobile", "desktop"],
-			"messages": ["PWA-add-to-home-screen"]
+			"messages": ["PWA-add-to-home-screen", "PWA-cannot-install"]
 		},
 		"ext.PWA.standalone.js": {
 			"localBasePath": "resources/ext.PWA.standalone",

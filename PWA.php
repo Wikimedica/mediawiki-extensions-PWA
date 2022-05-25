@@ -120,13 +120,7 @@ class PWA {
 	 * */
 	public static function PWAAndroidInstall( &$parser, $PWAId = '', $height = 50 ) 
 	{
-		global $wgScriptPath, $wgLanguageCode;
-		
-		return [
-			'<img class="pwa-install-button pwa-install-android" onclick="PWAAndroidInstall(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/android-install-'.$wgLanguageCode.'.svg" />',
-			'noparse' => true,
-			'isHTML' => true
-		];
+		return self::PWAInstall($parser, $PWAId, 'Android', $height);
 	}
 
 	/**
@@ -134,10 +128,24 @@ class PWA {
 	 * */
 	public static function PWAiOSInstall( &$parser, $PWAId = '', $height = 50 ) 
 	{
+		return self::PWAInstall($parser, $PWAId, 'iOS', $height);
+	}
+
+	/**
+	 * Generic magic word handling method.
+	 * */
+	public static function PWAInstall( &$parser, $PWAId, $platform, $height = 50 )
+	{
 		global $wgScriptPath, $wgLanguageCode;
 		
+		/* Buttons are disabled by default and enabled in PWA.js for the PWA associated with this page.
+		 * This is to cover the case where install buttons for different PWAs are on the page.
+		 * Only the PWA defined in the currently linked manifest can be installed. */
+		
+		if(!$PWAId) { return '<div class="error">Please provide a valid PWA ID.</div>'; }
+
 		return [
-			'<img class="pwa-install-button pwa-install-ios" onclick="PWAiOSInstall(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/iOS-install-'.$wgLanguageCode.'.svg" />',
+			'<img class="pwa-install-button pwa-'.$PWAId.'-install-button pwa-disabled-install-button pwa-install-'.strtolower($plaform).'" onclick="PWA'.$platform.'Install(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/'.lcfirst($platform).'-install-'.$wgLanguageCode.'.svg" />',
 			'noparse' => true,
 			'isHTML' => true
 		];

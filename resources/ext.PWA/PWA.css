@@ -3,6 +3,11 @@
   cursor: pointer; 
 }
 
+.pwa-disabled-install-button { /* Show the install button as disabled.*/
+  cursor: not-allowed;
+  opacity: 50%;
+}
+
 #pwa-overlay {
   position: fixed; 
   width: 100%;
