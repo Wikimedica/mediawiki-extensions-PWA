@@ -9,8 +9,7 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.31.0",
-		"extensions": { "MobileFrontend": "*" }
+		"MediaWiki": ">= 1.31.0"
 	},
 	"AutoloadClasses": {
 		"MediaWiki\\Extension\\PWA\\PWA": "PWA.php"

@@ -46,3 +46,8 @@
 
   #footer-places-desktop-toggle { display: none; }
   .footer-places > .hlist-separated li:after { display:none; }
+
+  .pwa-install-button { /* Show the install button as disabled.*/
+     cursor: not-allowed;
+     opacity: 50%;
+  }

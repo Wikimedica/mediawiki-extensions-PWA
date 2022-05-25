@@ -51,6 +51,8 @@ class PWA {
 			// Check if the current page's title matches the pattern.
 			foreach($patterns as $pattern)
 			{
+				$pattern = str_replace(' ', '_', $pattern); // Space and _ are considered equivalent in page titles.
+				
 				if(!preg_match($pattern, $title)) { continue; }
 				// The PWA matches the title.
 		
