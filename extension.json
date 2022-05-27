@@ -32,7 +32,7 @@
 		"ext.PWA.standalone.css": {
 			"localBasePath": "resources/ext.PWA.standalone",
 			"remoteExtPath": "PWA/resources/ext.PWA.standalone",
-			"styles": {"PWA.standalone.css": {"media": "standalone"}},
+			"styles": {"PWA.standalone.css": {"media": "all and (display-mode: standalone)"}},
 			"targets": ["mobile", "desktop"]
 		}
 	},
