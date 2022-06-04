@@ -11,8 +11,14 @@ if(!navigator.standalone || // Safari
 {
     // App is not in standalone mode.
 
-    // Enable the install button for the currently active PWA.
-    $(".pwa-" + mw.config.get("wgCurrentPWAId") + "-install-button").removeClass("pwa-disabled-install-button");
+    var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+    // If this is not the Facebook browser.
+    if(!((ua.indexOf("FBAN") > -1) && (ua.indexOf("FBAV") > -1))) {
+
+        // Enable the install button for the currently active PWA.
+        $(".pwa-" + mw.config.get("wgCurrentPWAId") + "-install-button").removeClass("pwa-disabled-install-button");
+    } 
 
     window.validateCanInstallPWA = function(id) {
 
