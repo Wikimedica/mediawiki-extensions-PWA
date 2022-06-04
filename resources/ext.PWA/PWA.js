@@ -15,8 +15,17 @@ if(!navigator.standalone || // Safari
     $(".pwa-" + mw.config.get("wgCurrentPWAId") + "-install-button").removeClass("pwa-disabled-install-button");
 
     window.validateCanInstallPWA = function(id) {
-        if(id != mw.config.get("wgCurrentPWAId")){
 
+        var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Cannot install the app from the Facebook browser.
+        if((ua.indexOf("FBAN") > -1) && (ua.indexOf("FBAV") > -1)) {
+            alert(mw.message("PWA-install-from-FB-not-allowed", mw.config.get("wgCurrentPWAName"), window.location.href));
+
+            return false;
+        }    
+        
+        if(id != mw.config.get("wgCurrentPWAId")){
             alert(mw.message("PWA-cannot-install", mw.config.get("wgCurrentPWAName")));
 
             return false; // Cannot install.
