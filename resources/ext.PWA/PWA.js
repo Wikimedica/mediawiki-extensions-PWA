@@ -14,7 +14,7 @@ if(!navigator.standalone || // Safari
     var ua = navigator.userAgent || navigator.vendor || window.opera;
 
     // If this is not the Facebook browser.
-    if(!((ua.indexOf("FBAN") > -1) && (ua.indexOf("FBAV") > -1))) {
+    if(!((ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1))) {
 
         // Enable the install button for the currently active PWA.
         $(".pwa-" + mw.config.get("wgCurrentPWAId") + "-install-button").removeClass("pwa-disabled-install-button");
@@ -25,7 +25,7 @@ if(!navigator.standalone || // Safari
         var ua = navigator.userAgent || navigator.vendor || window.opera;
 
         // Cannot install the app from the Facebook browser.
-        if((ua.indexOf("FBAN") > -1) && (ua.indexOf("FBAV") > -1)) {
+        if((ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1)) {
             alert(mw.message("PWA-install-from-FB-not-allowed", mw.config.get("wgCurrentPWAName"), window.location.href));
 
             return false;
