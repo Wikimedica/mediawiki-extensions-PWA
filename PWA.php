@@ -23,18 +23,20 @@ class PWA {
 	 * @param Skin $skin
 	*/
 	public static function onBeforePageDisplay(&$out, &$skin) {
-
-		global $wgPWAConfigs, $wgPWAMobileSkin, $wgScriptPath;
+		$globalConfig = $skin->getConfig();
 
 		// Add a specific CSS stylesheet in standalone (PWA) mode depending on wether the desktop or mobile skin is used.
-		$out->addStyle($wgScriptPath.'/index.php?title=MediaWiki:'.($skin->getSkinName() == $wgMobileSkin ? 'PWA-mobile.css': 'PWA-common.css').'&action=raw&ctype=text/css', 'standalone');
+		$out->addStyle(
+			$globalConfig->get( 'ScriptPath' ) .
+				'/index.php?title=MediaWiki:'.($skin->getSkinName() == $globalConfig->get( 'PWAMobileSkin' ) ?
+				'PWA-mobile.css': 'PWA-common.css').'&action=raw&ctype=text/css', 'standalone');
 
 		// Register some JS and CSS for standalone mode. This code should be in the service worker but until I get a better grasp of how they work is will be included in every page.
 		$out->addModuleStyles('ext.PWA.standalone.css'); // Add the CSS before the JS is loaded.
 		$out->addModules('ext.PWA.standalone.js'); // This will add the JS.
 
 		// Loop over all configured PWAs to check which one we should use for the requested page.
-		foreach ($wgPWAConfigs as $name => $config){
+		foreach ($globalConfig->get( 'PWAConfigs' ) as $name => $config){
 			if(!$config) { continue; } // If that PWA has been turned off (useful for disabling the default PWA [since the provide_default merge strategy only works in MW > 1.35.3]).
 
 			// Format the $pattern parameter.
@@ -65,7 +67,7 @@ class PWA {
 				$manifestUrl = $config['manifest'];
 				$manifest = json_decode(wfMessage($manifestUrl)->text());
 
-				$manifestUrl = $wgScriptPath.'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json';
+				$manifestUrl = $globalConfig->get( 'ScriptPath' ) .'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json';
 
 				$out->addHeadItem('pwa', '<link rel="manifest" href="'.$manifestUrl.'" data-PWA-id="'.htmlspecialchars($name).'" />');
 				
