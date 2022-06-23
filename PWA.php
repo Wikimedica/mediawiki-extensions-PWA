@@ -79,10 +79,14 @@ class PWA {
 				$overrideHomeLinks = isset($config['overrideHomeLinks']) && $config['overrideHomeLinks'] ? 'true': 'false';
 				$out->addHeadItem('pwa-home-links-override', '<script type="text/javascript">var wgPWAOverrideHomeLinks = '.$overrideHomeLinks.';</script>');
 
-				$icon = $manifest->icons[0]->src;
+				$icons = $manifest->icons ?? [];
 
-				// Set the apple-touch-icon (because iOS ignore the icon field in the manifest).
-				$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
+				if ( $icons[0] ?? false ) {
+					$icon = $icons[0]->src;
+					// Set the apple-touch-icon (because iOS ignore the icon field in the manifest).
+					$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
+				}
+
 				
 				// Register the add-to-homescreen JS/CSS module.
 				$out->addModules('ext.PWA.add-to-homescreen');
@@ -92,7 +96,10 @@ class PWA {
 
 				// Pass config parameters to mw.config so it can be fetch in JS.
 				$out->addJsConfigVars('wgCurrentPWAId', $name);
-				$out->addJsConfigVars('wgCurrentPWAName', $manifest->name);
+				$pwaname = $manifest->name ?? null;
+				if ( $pwaname ) {
+					$out->addJsConfigVars('wgCurrentPWAName', $pwaname);
+				}
 
 				// Add some more metas.
 				$out->addHeadItem('mobile-web-app-capable', '<meta name="mobile-web-app-capable" content="yes" />');
