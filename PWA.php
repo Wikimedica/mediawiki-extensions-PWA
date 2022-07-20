@@ -22,19 +22,21 @@ class PWA {
 	 * @param OutputPage $out
 	 * @param Skin $skin
 	*/
-	public function onBeforePageDisplay(&$out, &$skin) {
-
-		global $wgPWAConfigs, $wgPWAMobileSkin, $wgScriptPath;
+	public static function onBeforePageDisplay(&$out, &$skin) {
+		$globalConfig = $skin->getConfig();
 
 		// Add a specific CSS stylesheet in standalone (PWA) mode depending on wether the desktop or mobile skin is used.
-		$out->addStyle($wgScriptPath.'/index.php?title=MediaWiki:'.($skin->getSkinName() == $wgMobileSkin ? 'PWA-mobile.css': 'PWA-common.css').'&action=raw&ctype=text/css', 'standalone');
+		$out->addStyle(
+			$globalConfig->get( 'ScriptPath' ) .
+				'/index.php?title=MediaWiki:'.($skin->getSkinName() == $globalConfig->get( 'PWAMobileSkin' ) ?
+				'PWA-mobile.css': 'PWA-common.css').'&action=raw&ctype=text/css', 'standalone');
 
 		// Register some JS and CSS for standalone mode. This code should be in the service worker but until I get a better grasp of how they work is will be included in every page.
 		$out->addModuleStyles('ext.PWA.standalone.css'); // Add the CSS before the JS is loaded.
 		$out->addModules('ext.PWA.standalone.js'); // This will add the JS.
 
 		// Loop over all configured PWAs to check which one we should use for the requested page.
-		foreach ($wgPWAConfigs as $name => $config){
+		foreach ($globalConfig->get( 'PWAConfigs' ) as $name => $config){
 			if(!$config) { continue; } // If that PWA has been turned off (useful for disabling the default PWA [since the provide_default merge strategy only works in MW > 1.35.3]).
 
 			// Format the $pattern parameter.
@@ -65,7 +67,7 @@ class PWA {
 				$manifestUrl = $config['manifest'];
 				$manifest = json_decode(wfMessage($manifestUrl)->text());
 
-				$manifestUrl = $wgScriptPath.'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json';
+				$manifestUrl = $globalConfig->get( 'ScriptPath' ) .'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json';
 
 				$out->addHeadItem('pwa', '<link rel="manifest" href="'.$manifestUrl.'" data-PWA-id="'.htmlspecialchars($name).'" />');
 				
@@ -77,10 +79,14 @@ class PWA {
 				$overrideHomeLinks = isset($config['overrideHomeLinks']) && $config['overrideHomeLinks'] ? 'true': 'false';
 				$out->addHeadItem('pwa-home-links-override', '<script type="text/javascript">var wgPWAOverrideHomeLinks = '.$overrideHomeLinks.';</script>');
 
-				$icon = $manifest->icons[0]->src;
+				$icons = $manifest->icons ?? [];
 
-				// Set the apple-touch-icon (because iOS ignore the icon field in the manifest).
-				$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
+				if ( $icons[0] ?? false ) {
+					$icon = $icons[0]->src;
+					// Set the apple-touch-icon (because iOS ignore the icon field in the manifest).
+					$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
+				}
+
 				
 				// Register the add-to-homescreen JS/CSS module.
 				$out->addModules('ext.PWA.add-to-homescreen');
@@ -90,7 +96,10 @@ class PWA {
 
 				// Pass config parameters to mw.config so it can be fetch in JS.
 				$out->addJsConfigVars('wgCurrentPWAId', $name);
-				$out->addJsConfigVars('wgCurrentPWAName', $manifest->name);
+				$pwaname = $manifest->name ?? null;
+				if ( $pwaname ) {
+					$out->addJsConfigVars('wgCurrentPWAName', $pwaname);
+				}
 
 				// Add some more metas.
 				$out->addHeadItem('mobile-web-app-capable', '<meta name="mobile-web-app-capable" content="yes" />');
