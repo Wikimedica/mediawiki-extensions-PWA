@@ -59,7 +59,10 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "MediaWiki\\Extension\\PWA\\PWA::onBeforePageDisplay",
-		"ParserFirstCallInit": "MediaWiki\\Extension\\PWA\\PWA::onParserFirstCallInit"
+		"ParserFirstCallInit": "MediaWiki\\Extension\\PWA\\PWA::onParserFirstCallInit",
+        "RecentChange_save": "MediaWiki\\Extension\\PWA\\PWA::onRecentChangeSave",
+		"ListDefinedTags": "MediaWiki\\Extension\\PWA\\PWA::onRegisterTags",
+		"ChangeTagsListActive": "MediaWiki\\Extension\\PWA\\PWA::onRegisterTags"
 	},
 	"MessagesDirs": {
 		"PWA": [

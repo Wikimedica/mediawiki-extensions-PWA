@@ -86,7 +86,6 @@ class PWA {
 					// Set the apple-touch-icon (because iOS ignore the icon field in the manifest).
 					$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
 				}
-
 				
 				// Register the add-to-homescreen JS/CSS module.
 				$out->addModules('ext.PWA.add-to-homescreen');
@@ -104,8 +103,8 @@ class PWA {
 				// Add some more metas.
 				$out->addHeadItem('mobile-web-app-capable', '<meta name="mobile-web-app-capable" content="yes" />');
 				$out->addHeadItem('apple-mobile-web-app-capable', '<meta name="apple-mobile-web-app-capable" content="yes" />');
-				$out->addHeadItem('application-name', '<meta name="application-name" content="'.$name.'">');
-				$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.$name.'">');
+				$out->addHeadItem('application-name', '<meta name="application-name" content="'.$pwaname ?? $name.'">');
+				$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.$pwaname ?? $name.'">');
 
 				return; // Skip all other PWA configurations.
 			}
@@ -116,8 +115,7 @@ class PWA {
 	 * Register parser calls to display icons to install a specific PWA app.
 	 * @param OutputParser $parser  
 	*/
-	public static function onParserFirstCallInit( &$parser ) 
-	{
+	public static function onParserFirstCallInit( &$parser ) {
 		$parser->setFunctionHook('PWAAndroidInstall', __CLASS__.'::PWAAndroidInstall' );
 		$parser->setFunctionHook('PWAiOSInstall', __CLASS__.'::PWAiOSInstall' );
 
@@ -125,26 +123,53 @@ class PWA {
 	}
 
 	/**
+	 * When a RecentChange entry is saved.
+	*/
+	public static function onRecentChangeSave( \RecentChange &$recentChange ) {
+		global $wgRequest;
+
+		if($PWAId = $wgRequest->getCookie("PWAId", '')) { // If this change was made with a PWA.
+			$recentChange->addTags(['PWA-standalone-edit', 'PWA-standalone-edit-'.$PWAId]);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Register tags in use with this extension. 
+	*/
+	public static function onRegisterTags( array &$tags ) {
+		global $wgPWAConfigs;
+
+		if($wgPWAConfigs) { // If the admin did set a configuration.
+			foreach($wgPWAConfigs as $name => $config) {
+				$tags[] = "PWA-standalone-edit-$name"; // Add an edit tag for each PWA.
+			}
+		}
+
+		$tags[] = 'PWA-standalone-edit';
+
+		return true;
+	}
+
+	/**
 	 * Magic word handling method.
 	 * */
-	public static function PWAAndroidInstall( &$parser, $PWAId = '', $height = 50 ) 
-	{
+	public static function PWAAndroidInstall( &$parser, $PWAId = '', $height = 50 ) {
 		return self::PWAInstall($parser, $PWAId, 'Android', $height);
 	}
 
 	/**
 	 * Magic word handling method.
 	 * */
-	public static function PWAiOSInstall( &$parser, $PWAId = '', $height = 50 ) 
-	{
+	public static function PWAiOSInstall( &$parser, $PWAId = '', $height = 50 ) {
 		return self::PWAInstall($parser, $PWAId, 'iOS', $height);
 	}
 
 	/**
 	 * Generic magic word handling method.
 	 * */
-	public static function PWAInstall( &$parser, $PWAId, $platform, $height = 50 )
-	{
+	public static function PWAInstall( &$parser, $PWAId, $platform, $height = 50 ) {
 		global $wgScriptPath, $wgLanguageCode;
 		
 		/* Buttons are disabled by default and enabled in PWA.js for the PWA associated with this page.
