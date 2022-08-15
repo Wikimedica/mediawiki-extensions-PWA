@@ -65,6 +65,12 @@ class PWA {
 				}
 
 				$manifestUrl = $config['manifest'];
+
+				if(!\Title::newFromText($manifestUrl, NS_MEDIAWIKI)->exists()) { // If the manifest pointed to by the config was not defined or does not exist.
+					wfDebugLog( 'PWA', "$name PWA manifest does not exist." );
+					continue 2; // Skip that PWA.
+				}
+
 				$manifest = json_decode(wfMessage($manifestUrl)->text());
 
 				$manifestUrl = $globalConfig->get( 'ScriptPath' ) .'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json';
