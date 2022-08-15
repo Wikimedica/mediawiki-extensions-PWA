@@ -5,5 +5,6 @@
     "PWA-add-to-home-screen": "Add $1 to your homescreen",
     "PWA-cannot-install": "You can only install the $1 app from this page. Try navigating to a different page and try again.",
     "PWA-install-from-FB-not-allowed": "You cannot install $1 from the Facebook browser. Please click the menu in the top right corner and open this link with your default browser.",
-    "tag-PWA-standalone-edit": "Mobile app edit"
+    "tag-PWA-standalone-edit": "PWA mobile app edit",
+    "tag-PWA-standalone-edit-description": "Edits made with the PWA mobile app."
 }
