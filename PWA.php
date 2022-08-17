@@ -135,7 +135,7 @@ class PWA {
 		global $wgRequest;
 
 		if($PWAId = $wgRequest->getCookie("PWAId", '')) { // If this change was made with a PWA.
-			$recentChange->addTags(['PWA-standalone-edit', 'PWA-standalone-edit-'.$PWAId]);
+			$recentChange->addTags(['PWA-edit', 'PWA-edit-'.$PWAId]);
 		}
 
 		return true;
@@ -149,11 +149,11 @@ class PWA {
 
 		if($wgPWAConfigs) { // If the admin did set a configuration.
 			foreach($wgPWAConfigs as $name => $config) {
-				$tags[] = "PWA-standalone-edit-$name"; // Add an edit tag for each PWA.
+				$tags[] = "PWA-edit-$name"; // Add an edit tag for each PWA.
 			}
 		}
 
-		$tags[] = 'PWA-standalone-edit';
+		$tags[] = 'PWA-edit';
 
 		return true;
 	}
