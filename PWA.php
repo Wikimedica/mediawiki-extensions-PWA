@@ -103,7 +103,7 @@ class PWA {
 				}
 				/* Pass the start_url, if it differs from the default main page url (as stated in MediaWiki:Mainpage), links linking to the main page
 				 * in the interface will be replaced with the start_url. */
-				$out->addJsConfigVars('wgCurrentPWAStartUrl', $manifest['start_url']);
+				$out->addJsConfigVars('wgCurrentPWAStartUrl', $manifest->start_url);
 
 				// Add some more metas.
 				$out->addHeadItem('mobile-web-app-capable', '<meta name="mobile-web-app-capable" content="yes" />');
