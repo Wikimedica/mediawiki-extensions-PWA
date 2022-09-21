@@ -81,10 +81,6 @@ class PWA {
 				 * of /wiki/Main_Page it can set this parameter to true so when a user clicks the wiki's logo, they are taken to the PWA home
 				 * instead of the default home page. */
 
-				 // Peut-être que ça devrait se retrouver directement dans le manifest.json ? Serait plus facile à configuer.
-				$overrideHomeLinks = isset($config['overrideHomeLinks']) && $config['overrideHomeLinks'] ? 'true': 'false';
-				$out->addHeadItem('pwa-home-links-override', '<script type="text/javascript">var wgPWAOverrideHomeLinks = '.$overrideHomeLinks.';</script>');
-
 				$icons = $manifest->icons ?? [];
 
 				if ( $icons[0] ?? false ) {
@@ -99,12 +95,15 @@ class PWA {
 				// Register the PWA extension's JS which will then register the service worker.
 				$out->addModules('ext.PWA');
 
-				// Pass config parameters to mw.config so it can be fetch in JS.
+				// Pass config parameters to mw.config so it can be fetched in JS.
 				$out->addJsConfigVars('wgCurrentPWAId', $name);
 				$pwaname = $manifest->name ?? null;
 				if ( $pwaname ) {
 					$out->addJsConfigVars('wgCurrentPWAName', $pwaname);
 				}
+				/* Pass the start_url, if it differs from the default main page url (as stated in MediaWiki:Mainpage), links linking to the main page
+				 * in the interface will be replaced with the start_url. */
+				$out->addJsConfigVars('wgCurrentPWAStartUrl', $manifest['start_url']);
 
 				// Add some more metas.
 				$out->addHeadItem('mobile-web-app-capable', '<meta name="mobile-web-app-capable" content="yes" />');

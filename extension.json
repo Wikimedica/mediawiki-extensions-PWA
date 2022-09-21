@@ -27,7 +27,8 @@
 			"localBasePath": "resources/ext.PWA.standalone",
 			"remoteExtPath": "PWA/resources/ext.PWA.standalone",
 			"scripts": ["PWA.standalone.js"],
-			"targets": ["mobile", "desktop"]
+			"targets": ["mobile", "desktop"],
+			"messages": ["mainpage"]
 		},
 		"ext.PWA.standalone.css": {
 			"localBasePath": "resources/ext.PWA.standalone",

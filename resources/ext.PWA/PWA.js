@@ -31,6 +31,12 @@ if(!navigator.standalone || // Safari
             return false;
         }    
         
+        /* We could check if the PWA exists in the config, but this would mean adding more JS code client side. Skip that for now and just show a cannot install message.
+        if(mw.config.get("wgPWAConfigs")[id] === null) {
+            alert("pwa does not exist");
+
+            return false;
+        }*/
         if(id != mw.config.get("wgCurrentPWAId")){
             alert(mw.message("PWA-cannot-install", mw.config.get("wgCurrentPWAName")));
 
@@ -54,7 +60,7 @@ if(!navigator.standalone || // Safari
 
         if(!validateCanInstallPWA(id)) { return; }
 
-        if(window.deferredBeforeInstallPrompt) { window.deferredBeforeInstallPrompt.prompt(); } // Fire the stash event.
+        if(window.deferredBeforeInstallPrompt) { window.deferredBeforeInstallPrompt.prompt(); } // Fire the stashed event.
     }
 
     // Initialize deferredPrompt for use later to show browser install prompt.
