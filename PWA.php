@@ -36,12 +36,12 @@ class PWA {
 		$out->addModules('ext.PWA.standalone.js'); // This will add the JS.
 
 		// Loop over all configured PWAs to check which one we should use for the requested page.
-		foreach ($globalConfig->get( 'PWAConfigs' ) as $name => $config){
+		foreach ($globalConfig->get( 'PWAConfigs' ) as $id => $config){
 			if(!$config) { continue; } // If that PWA has been turned off (useful for disabling the default PWA [since the provide_default merge strategy only works in MW > 1.35.3]).
 
 			// Format the $pattern parameter.
 			if(!isset($config['patterns'])) {
-				wfDebugLog( 'PWA', "$name PWA missing the pattern configuration entry." );
+				wfDebugLog( 'PWA', "$id PWA missing the pattern configuration entry." );
 				continue; // Misconfigured property, skip this PWA.
 			} else {
 				// Make sure patterns is an array.
@@ -60,14 +60,14 @@ class PWA {
 				// The PWA matches the title.
 		
 				if(!isset($config['manifest'])) {
-					wfDebugLog( 'PWA', "$name PWA missing the manifest configuration entry." );
+					wfDebugLog( 'PWA', "$id PWA missing the manifest configuration entry." );
 					continue 2; // Misconfigured property, skip this PWA.
 				}
 
 				$manifestUrl = $config['manifest'];
 
 				if(!\Title::newFromText($manifestUrl, NS_MEDIAWIKI)->exists()) { // If the manifest pointed to by the config was not defined or does not exist.
-					wfDebugLog( 'PWA', "$name PWA manifest does not exist." );
+					wfDebugLog( 'PWA', "$id PWA manifest does not exist." );
 					continue 2; // Skip that PWA.
 				}
 
@@ -75,7 +75,7 @@ class PWA {
 
 				$manifestUrl = $globalConfig->get( 'ScriptPath' ) .'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json';
 
-				$out->addHeadItem('pwa', '<link rel="manifest" href="'.$manifestUrl.'" data-PWA-id="'.htmlspecialchars($name).'" />');
+				$out->addHeadItem('pwa', '<link rel="manifest" href="'.$manifestUrl.'" data-PWA-id="'.htmlspecialchars($id).'" />');
 
 				$icons = $manifest->icons ?? [];
 
@@ -94,20 +94,17 @@ class PWA {
 				$out->addModules('ext.PWA');
 
 				// Pass config parameters to mw.config so it can be fetched in JS.
-				$out->addJsConfigVars('wgCurrentPWAId', $name);
+				$out->addJsConfigVars('wgCurrentInstallablePWAId', $id);
 				$pwaname = $manifest->name ?? null;
 				if ( $pwaname ) {
-					$out->addJsConfigVars('wgCurrentPWAName', $pwaname);
+					$out->addJsConfigVars('wgCurrentInstallablePWAName', $pwaname);
 				}
-				/* Pass the start_url, if it differs from the default main page url (as stated in MediaWiki:Mainpage), links linking to the main page
-				 * in the interface will be replaced with the start_url. */
-				$out->addJsConfigVars('wgCurrentPWAStartUrl', $manifest->start_url);
 
 				// Add some more metas.
 				$out->addHeadItem('mobile-web-app-capable', '<meta name="mobile-web-app-capable" content="yes" />');
 				$out->addHeadItem('apple-mobile-web-app-capable', '<meta name="apple-mobile-web-app-capable" content="yes" />');
-				$out->addHeadItem('application-name', '<meta name="application-name" content="'.$pwaname ?? $name.'">');
-				$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.$pwaname ?? $name.'">');
+				$out->addHeadItem('application-name', '<meta name="application-name" content="'.$pwaname ?? $id.'">');
+				$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.$pwaname ?? $id.'">');
 
 				return; // Skip all other PWA configurations.
 			}
@@ -145,8 +142,8 @@ class PWA {
 		global $wgPWAConfigs;
 
 		if($wgPWAConfigs) { // If the admin did set a configuration.
-			foreach($wgPWAConfigs as $name => $config) {
-				$tags[] = "PWA-edit-$name"; // Add an edit tag for each PWA.
+			foreach($wgPWAConfigs as $id => $config) {
+				$tags[] = "PWA-edit-$id"; // Add an edit tag for each PWA.
 			}
 		}
 

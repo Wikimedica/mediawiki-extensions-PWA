@@ -1,15 +1,16 @@
-// Register the service worker if it's supported.
-if ('serviceWorker' in navigator) {
-    /* The folder a service worker sits in determines it's scope. Hence, if we want the service loader to apply to the whole wiki, we need
-     * to define it by calling MediaWiki's index.php manually using a service worker associated with the current PWA. */
-    navigator.serviceWorker.register(mw.config.get("wgScriptPath") + "/index.php?title=MediaWiki:PWA-" + mw.config.get("wgCurrentPWAId") + "-serviceWorker.js&action=raw&ctype=text/javascript");
-}
-
 if(!navigator.standalone || // Safari
     !(window.matchMedia('(display-mode: standalone)').matches) // Chrome
 )
 {
     // App is not in standalone mode.
+
+    // Register the service worker if it's supported.
+    if ('serviceWorker' in navigator) {
+        /* The folder a service worker sits in determines it's scope. Hence, if we want the service loader to apply to the whole wiki, we need
+        * to define it by calling MediaWiki's index.php manually using a service worker associated with the current PWA. */
+        navigator.serviceWorker.register(mw.config.get("wgScriptPath") + "/index.php?title=MediaWiki:PWA-" + mw.config.get("wgCurrentInstallablePWAId") + "-serviceWorker.js&action=raw&ctype=text/javascript");
+    }
+    /* Do not register a service worked in standalone mode. The effect will be that each PWA will have its own service worker code. */
 
     var ua = navigator.userAgent || navigator.vendor || window.opera;
 
@@ -17,7 +18,7 @@ if(!navigator.standalone || // Safari
     if(!((ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1))) {
 
         // Enable the install button for the currently active PWA.
-        $(".pwa-" + mw.config.get("wgCurrentPWAId") + "-install-button").removeClass("pwa-disabled-install-button");
+        $(".pwa-" + mw.config.get("wgCurrentInstallablePWAId") + "-install-button").removeClass("pwa-disabled-install-button");
     } 
 
     window.validateCanInstallPWA = function(id) {
@@ -26,7 +27,7 @@ if(!navigator.standalone || // Safari
 
         // Cannot install the app from the Facebook browser.
         if((ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1)) {
-            alert(mw.message("PWA-install-from-FB-not-allowed", mw.config.get("wgCurrentPWAName"), window.location.href));
+            alert(mw.message("PWA-install-from-FB-not-allowed", mw.config.get("wgCurrentInstallablePWAName"), window.location.href));
 
             return false;
         }    
@@ -37,8 +38,8 @@ if(!navigator.standalone || // Safari
 
             return false;
         }*/
-        if(id != mw.config.get("wgCurrentPWAId")){
-            alert(mw.message("PWA-cannot-install", mw.config.get("wgCurrentPWAName")));
+        if(id != mw.config.get("wgCurrentInstallablePWAId")){
+            alert(mw.message("PWA-cannot-install", mw.config.get("wgCurrentInstallablePWAName")));
 
             return false; // Cannot install.
         }
@@ -52,7 +53,7 @@ if(!navigator.standalone || // Safari
 
         /* Apple's mobile safari does not support native adding to homescreen. Instead, show the user a gif tell them how to add
         * the app manually to their home screen. */
-        overlay = $('<div id="pwa-overlay" onclick="$(this).fadeOut();"><div id="pwa-overlay-text">'+ mw.message("PWA-add-to-home-screen", mw.config.get("wgCurrentPWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
+        overlay = $('<div id="pwa-overlay" onclick="$(this).fadeOut();"><div id="pwa-overlay-text">'+ mw.message("PWA-add-to-home-screen", mw.config.get("wgCurrentInstallablePWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
         $('body').append(overlay);
     }
 
