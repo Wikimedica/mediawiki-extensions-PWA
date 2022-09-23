@@ -3,9 +3,15 @@ if(!navigator.standalone || // Safari
 )
 {
     // App is not in standalone mode.
-
+    
     // Register the service worker if it's supported.
     if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            registrations.forEach(function(r) { r.unregister(); });
+          });
+
+        console.log('Registering service worker.') ;
+        
         /* The folder a service worker sits in determines it's scope. Hence, if we want the service loader to apply to the whole wiki, we need
         * to define it by calling MediaWiki's index.php manually using a service worker associated with the current PWA. */
         navigator.serviceWorker.register(mw.config.get("wgScriptPath") + "/index.php?title=MediaWiki:PWA-" + mw.config.get("wgCurrentInstallablePWAId") + "-serviceWorker.js&action=raw&ctype=text/javascript");
