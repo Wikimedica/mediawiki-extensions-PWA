@@ -76,17 +76,15 @@ class PWA {
 				$manifestUrl = $globalConfig->get( 'ScriptPath' ) .'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json';
 
 				$out->addHeadItem('pwa', '<link rel="manifest" href="'.$manifestUrl.'" data-PWA-id="'.htmlspecialchars($name).'" />');
-				
-				/* Home links the interface can be overriden by the PWA. For example, if a PWA wans its home to be /wiki/MyPWAHome instead
-				 * of /wiki/Main_Page it can set this parameter to true so when a user clicks the wiki's logo, they are taken to the PWA home
-				 * instead of the default home page. */
 
 				$icons = $manifest->icons ?? [];
 
 				if ( $icons[0] ?? false ) {
 					$icon = $icons[0]->src;
-					// Set the apple-touch-icon (because iOS ignore the icon field in the manifest).
-					$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');
+
+					// Set the apple-touch-icon (because iOS ignores the icon field in the manifest). Add it as a head item to avoid modification by other extensions.
+					$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');	
+					// All other apple-touch-icon link tags will be removed later on in onOutputPageAfterGetHeadLinksArray.
 				}
 				
 				// Register the add-to-homescreen JS/CSS module.
@@ -155,6 +153,20 @@ class PWA {
 		$tags[] = 'PWA-edit';
 
 		return true;
+	}
+
+	/** 
+	 * Sanitise head links to give priority to those defined by this extension. 
+	 * */
+	public static function onOutputPageAfterGetHeadLinksArray( &$tags, \OutputPage $output ) {
+		// The apple-touch-icon defined by this extension is not in that array because it was added in the head items directly.
+		
+		foreach($tags as $k => $t) {
+			// If this tag defines an apple-touch-icon.
+			if(strpos($t, 'apple-touch-icon')) { 
+				unset($tags[$k]); // Delete it.
+			}
+		}
 	}
 
 	/**

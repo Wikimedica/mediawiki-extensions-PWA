@@ -63,7 +63,8 @@
 		"ParserFirstCallInit": "MediaWiki\\Extension\\PWA\\PWA::onParserFirstCallInit",
         "RecentChange_save": "MediaWiki\\Extension\\PWA\\PWA::onRecentChangeSave",
 		"ListDefinedTags": "MediaWiki\\Extension\\PWA\\PWA::onRegisterTags",
-		"ChangeTagsListActive": "MediaWiki\\Extension\\PWA\\PWA::onRegisterTags"
+		"ChangeTagsListActive": "MediaWiki\\Extension\\PWA\\PWA::onRegisterTags",
+		"OutputPageAfterGetHeadLinksArray": "MediaWiki\\Extension\\PWA\\PWA::onOutputPageAfterGetHeadLinksArray"
 	},
 	"MessagesDirs": {
 		"PWA": [
