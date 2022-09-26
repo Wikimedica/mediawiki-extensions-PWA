@@ -6,5 +6,7 @@
     "PWA-cannot-install": "Vous pouvez seulement installer l'application $1 depuis cette page. Naviguez vers une autre page et essayez à nouveau.",
     "PWA-install-from-FB-not-allowed": "Vous ne pouvez pas installer $1 depuis le navigateur de Facebook. Veuillez cliquer sur le menu en haut à droite et ouvrez ce lien avec votre navigateur par défaut.",
     "tag-PWA-edit": "Modification par l'application mobile PWA",
-    "tag-PWA-edit-description": "Modifications faites par l'application mobile PWA."
+    "tag-PWA-edit-description": "Modifications faites par l'application mobile PWA.",
+    "PWA-invalid-pwa-id-title": "pwa-id invalide",
+    "PWA-invalid-pwa-id-message": "L'identificateur de la PWA est invalide. Avez-vous modifié manuellement l'URL de la requête? Pour corriger cette erreur, fermez l'application, retirez là de vos applications actives et réouvrez-la."
 }

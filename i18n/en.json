@@ -6,5 +6,7 @@
     "PWA-cannot-install": "You can only install the $1 app from this page. Try navigating to a different page and try again.",
     "PWA-install-from-FB-not-allowed": "You cannot install $1 from the Facebook browser. Please click the menu in the top right corner and open this link with your default browser.",
     "tag-PWA-edit": "PWA mobile app edit",
-    "tag-PWA-edit-description": "Edits made with the PWA mobile app."
+    "tag-PWA-edit-description": "Edits made with the PWA mobile app.",
+    "PWA-invalid-pwa-id-title": "Invalid pwa-id",
+    "PWA-invalid-pwa-id-message": "The PWA identifier is not valid. Did you manually modify the query URL ? To solve the error, close the app, remove it from the list of open apps and re-open it."
 }
