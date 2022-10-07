@@ -17,6 +17,32 @@ use OOUI;
  */
 class PWA {
 
+	/** @param string|null caching var for _getPWAId() */
+	private static $_pwaId = null;
+	
+	/**
+	 * @return string|null the currently active PWA id or null if no PWA is in use.
+	 */
+	private static function _getPWAId() {
+		global $wgRequest;
+
+		if(!self::$_pwaId) { 
+			if(defined('MW_ENTRY_POINT') && MW_ENTRY_POINT == 'api') {
+				// If this is an API call, the URL will not contain the pwa-id, get it from session.
+				self::$_pwaId = $wgRequest->getSession()->get('pwa-id');
+			} else {
+				// Getthe pwa-id from the request URL.
+				self::$_pwaId = $wgRequest->getQueryValuesOnly()['pwa-id'];
+				
+				// Set the pwa-id in session so it can be used by API calls. Should the pwa-id dissapear (ie: the user uses both the browser and the app at the same time), it will be removed.
+				self::$_pwaId ? $wgRequest->getSession()->set('pwa-id', self::$_pwaId): $wgRequest->getSession()->remove('pwa-id');
+				$wgRequest->getSession()->save();
+			}
+		 }
+
+		return self::$_pwaId;
+	}
+	
 	/**
 	 * Called before a page displayed.
 	 * @param OutputPage $out
@@ -36,7 +62,7 @@ class PWA {
 		$out->addModules('ext.PWA.standalone.js'); // This will add the JS.
 		
 		// If this request was made within the context of a PWA.
-		if($PWAId = $out->getRequest()->getQueryValuesOnly()['pwa-id']) {
+		if($PWAId = self::_getPWAId()) {
 
 			/* Figuring out if a PWA is in use is easy, we just check in JS if the navigator in is standalone mode.
 			 * Figuring out which PWA is in use is hard for the following reasons:
@@ -161,9 +187,8 @@ class PWA {
 	 * When a RecentChange entry is saved.
 	*/
 	public static function onRecentChangeSave( \RecentChange &$recentChange ) {
-		global $wgRequest;
 
-		if($PWAId = $out->getRequest()->getQueryValuesOnly()['pwa-id']) { // If this change was made with a PWA.
+		if($PWAId = self::_getPWAId()) { // If this change was made with a PWA.
 			$recentChange->addTags(['PWA-edit', 'PWA-edit-'.$PWAId]);
 		}
 
@@ -205,7 +230,7 @@ class PWA {
 	 * If the pwa-id URL parameter was part of the request, propagate it.
 	 * */
 	public static function onBeforePageRedirect( $out, &$redirect, &$code ) { 
-		if($PWAId = $out->getRequest()->getQueryValuesOnly()['pwa-id']) {
+		if($PWAId = self::_getPWAId()) {
 			$url = parse_url($redirect);
 
 			if($url['query']) { // If the url had a query.

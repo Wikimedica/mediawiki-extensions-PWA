@@ -12,7 +12,7 @@ if(navigator.standalone || // Safari
 
     // No id was provided by the server, maybe the user modified the URL manually?
     if(!id) { 
-        return; // Let the user proceed, the pwa-id will be reinjected in the url when user closes and reopen the app.
+        return; // Let the user proceed, the pwa-id will be reinjected in the url when the user closes and reopen the app.
     }
 
     /* If the main page differs from the start_url (as stated in the manifest, replace links to the main page with links to the start_url. */
