@@ -24,8 +24,8 @@ if(navigator.standalone || // Safari
     }
 
     /*
-     * Adds the current PWA id to a URL. 
-     */
+    * Adds the current PWA id to a URL. 
+    */
     function injectPWAId(href) {
         
         if(href[0] == '#') { return; } // Do nothing on fragments.
@@ -54,13 +54,41 @@ if(navigator.standalone || // Safari
      * Use a URL parameter for that effet and make sure it's always added to the next URL. */
     $('a').click(function(e) {
        $(this).attr('href', injectPWAId($(this).attr("href")));
+
+       // injectPWAId is defined inthe PWA.js file.
     });
 
     // Do the same with form actions.
     $('form').each(function() { 
         $(this).attr('action', injectPWAId($(this).attr("action"))); 
     });
-}
-else { // Not in PWA mode.
+
+
+    // Create an observer instance to inject the pwa-id parameter to URLs that are created dynamically.
+    const observer = new MutationObserver((mutationList, observer) => {
+        for (const mutation of mutationList) {
+            if (mutation.type === 'childList') {
+                // Each time a new set of notes is added, traverse them to add events that append a URL parameter to their links.
+
+                console.log('A child node has been added or removed.');
+
+                $(mutation.target).find('a').click(function(e) {
+                    $(this).attr('href', injectPWAId($(this).attr("href")));
+                });
+
+                $(mutation.target).find('form').each(function() { 
+                    $(this).attr('action', injectPWAId($(this).attr("action"))); 
+                });
+            } 
+            /*else if (mutation.type === 'attributes') {
+                console.log(`The ${mutation.attributeName} attribute was modified.`);
+            }*/
+        }
+    });
+
+    // Start observing the target node for configured mutations.
+    observer.observe($('body').get(0), { attributes: true, childList: true, subtree: true });
+
+} else { // Not in PWA mode.
     
 }
