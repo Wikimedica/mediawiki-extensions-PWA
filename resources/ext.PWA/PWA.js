@@ -1,3 +1,4 @@
+
 if(!navigator.standalone || // Safari
     !(window.matchMedia('(display-mode: standalone)').matches) // Chrome
 )
@@ -63,8 +64,24 @@ if(!navigator.standalone || // Safari
 
         /* Apple's mobile safari does not support native adding to homescreen. Instead, show the user a gif tell them how to add
         * the app manually to their home screen. */
-        overlay = $('<div id="pwa-overlay" onclick="$(this).fadeOut();"><div id="pwa-overlay-text">'+ mw.message("PWA-add-to-home-screen", mw.config.get("wgCurrentInstallablePWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
+        overlay = $('<div id="pwa-overlay"><div id="pwa-overlay-text">'+ mw.message("PWA-add-to-home-screen", mw.config.get("wgCurrentInstallablePWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
         $('body').append(overlay);
+
+        /* Safari does not care about the start_url parameter in the manifest. Instead, it used the current URL as the start URL.
+         * to have the pwa-id in the url, we thus need to inject right before the user adds the page to its homescreen.
+         * see: https://stackoverflow.com/questions/42379228/web-app-manifest-start-url-doesnt-work-for-safari
+         */
+
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.set('pwa-id', id);
+        const oldUrl= new URL(window.location);
+
+        history.replaceState(history.state, "", newUrl);
+
+        $(overlay).click(function() {
+            $(this).fadeOut();
+            history.replaceState(history.state, "", oldUrl);
+        });
     }
 
     window.PWAAndroidInstall = function(id) {
