@@ -28,24 +28,31 @@ if(navigator.standalone || // Safari
     */
     function injectPWAId(href) {
         
-        if(href[0] == '#') { return; } // Do nothing on fragments.
-        if(href.indexOf('javascript') == 0) { return; } // Do nothing on JS code.
-        if(href.indexOf('mailto') == 0) { return; } // Do nothing on mailto links.
+        if(href[0] == '#') { return href; } // Do nothing on fragments.
+        if(href.indexOf('javascript') == 0) { return href; } // Do nothing on JS code.
+        if(href.indexOf('mailto') == 0) { return href; } // Do nothing on mailto links.S
+        /* if(href.indexOf('//') != -1 // If this URL contains a domain.
+            && href.indexOf(window.location.host) == -1 // If this is an external URL.
+            ) { 
+                return href;
+        }*/
 
-        if(href[href.length - 1] == '/' && href.indexOf('?') == -1) { href = href + '?pwa-id=' + id; }
-        else {
-
+        try { href = new URL(href); }
+        catch (e) {
             // Make sure the protocol and hostname are part of the url (otherwise the URL object will throw an error).
-            if(href.indexOf(window.location.protocol) != 0) { href = window.location.protocol + '//' + window.location.hostname + href; }
-            
+            href = window.location.protocol + '//' + window.location.hostname + href;
+
             try { href = new URL(href); }
             catch (e) {
+                // URL is defective.
                 console.log(href + " cannot be processed.")
                 throw e;
             }
-
-            href.searchParams.set('pwa-id', id);
         }
+        
+        if(href.host != window.location.hostname) { return href; } // This is an externat URL, don't touch it.
+
+        href.searchParams.set('pwa-id', id); // Append the PWA's id.
 
         return href;
     };
