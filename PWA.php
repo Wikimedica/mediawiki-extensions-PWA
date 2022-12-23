@@ -31,8 +31,8 @@ class PWA {
 				// If this is an API call, the URL will not contain the pwa-id, get it from session.
 				self::$_pwaId = $wgRequest->getSession()->get('pwa-id');
 			} else {
-				// Getthe pwa-id from the request URL.
-				self::$_pwaId = $wgRequest->getQueryValuesOnly()['pwa-id'];
+				// Get the pwa-id from the request URL.
+				self::$_pwaId = $wgRequest->getQueryValuesOnly()['pwa-id'] ?? false;
 				
 				// Set the pwa-id in session so it can be used by API calls. Should the pwa-id dissapear (ie: the user uses both the browser and the app at the same time), it will be removed.
 				self::$_pwaId ? $wgRequest->getSession()->set('pwa-id', self::$_pwaId): $wgRequest->getSession()->remove('pwa-id');
@@ -268,7 +268,7 @@ class PWA {
 		if(!$PWAId) { return '<div class="error">Please provide a valid PWA ID.</div>'; }
 
 		return [
-			'<img class="pwa-install-button pwa-'.$PWAId.'-install-button pwa-disabled-install-button pwa-install-'.strtolower($plaform).'" onclick="PWA'.$platform.'Install(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/'.lcfirst($platform).'-install-'.$wgLanguageCode.'.svg" />',
+			'<img class="pwa-install-button pwa-'.$PWAId.'-install-button pwa-disabled-install-button pwa-install-'.strtolower($platform).'" onclick="PWA'.$platform.'Install(\''.htmlspecialchars($PWAId).'\');" height="'.htmlspecialchars($height).'" src="'.$wgScriptPath.'/extensions/PWA/resources/ext.PWA/'.lcfirst($platform).'-install-'.$wgLanguageCode.'.svg" />',
 			'noparse' => true,
 			'isHTML' => true
 		];
