@@ -2,7 +2,7 @@
     "pwa-extension-description": "Rend une installation MediaWiki compatible avec le standard [https://en.wikipedia.org/wiki/Progressive_web_application PWA].",
     "pwa-add-to-home-screen": "Ajoutez $1 à votre écran d'accueil",
     "pwa-cannot-install": "Vous pouvez seulement installer l'application $1 depuis cette page. Naviguez vers une autre page et essayez à nouveau.",
-    "pwa-install-from-FB-not-allowed": "Vous ne pouvez pas installer $1 depuis le navigateur de Facebook. Veuillez cliquer sur le menu en haut à droite et ouvrez ce lien avec votre navigateur par défaut.",
+    "pwa-install-from-fb-not-allowed": "Vous ne pouvez pas installer $1 depuis le navigateur de Facebook. Veuillez cliquer sur le menu en haut à droite et ouvrez ce lien avec votre navigateur par défaut.",
     "tag-pwa-edit": "Modification par l'application mobile PWA",
     "tag-pwa-edit-description": "Modifications faites par l'application mobile PWA.",
     "pwa-invalid-pwa-id-title": "pwa-id invalide",

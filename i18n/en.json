@@ -2,7 +2,7 @@
     "pwa-extension-description": "Makes a MediaWiki installation [https://en.wikipedia.org/wiki/Progressive_web_application PWA] compatible.",
     "pwa-add-to-home-screen": "Add $1 to your homescreen",
     "pwa-cannot-install": "You can only install the $1 app from this page. Try navigating to a different page and try again.",
-    "pwa-install-from-FB-not-allowed": "You cannot install $1 from the Facebook browser. Please click the menu in the top right corner and open this link with your default browser.",
+    "pwa-install-from-fb-not-allowed": "You cannot install $1 from the Facebook browser. Please click the menu in the top right corner and open this link with your default browser.",
     "tag-pwa-edit": "PWA mobile app edit",
     "tag-pwa-edit-description": "Edits made with the PWA mobile app.",
     "pwa-invalid-pwa-id-title": "Invalid pwa-id",

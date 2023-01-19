@@ -38,7 +38,7 @@ if(!navigator.standalone || // Safari
 
         // Cannot install the app from the Facebook browser.
         if((ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1)) {
-            alert(mw.message("pwa-install-from-FB-not-allowed", mw.config.get("wgCurrentInstallablePWAName"), window.location.href));
+            alert(mw.message("pwa-install-from-fb-not-allowed", mw.config.get("wgCurrentInstallablePWAName"), window.location.href));
 
             return false;
         }    
