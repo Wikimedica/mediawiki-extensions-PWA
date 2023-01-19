@@ -79,7 +79,7 @@ class PWA {
 				/* The id could not be found, maybe the user modified the URL manually ? 
 				 * Show an error page and prompt the user to close the PWA and re-open it (thus inserting the pwa-id in the start_url again). */
 				wfDebugLog ('PWA', 'Invalid PWA id supplied in the URL parameter.'); 
-				$out->showErrorPage(wfMessage('PWA-invalid-pwa-id-title'), wfMessage('PWA-invalid-pwa-id-message'));
+				$out->showErrorPage(wfMessage('pwa-invalid-pwa-id-title'), wfMessage('pwa-invalid-pwa-id-message'));
 
 				return;
 			}
@@ -189,7 +189,7 @@ class PWA {
 	public static function onRecentChangeSave( \RecentChange &$recentChange ) {
 
 		if($PWAId = self::_getPWAId()) { // If this change was made with a PWA.
-			$recentChange->addTags(['PWA-edit', 'PWA-edit-'.$PWAId]);
+			$recentChange->addTags(['pwa-edit', 'pwa-edit-'.$PWAId]);
 		}
 
 		return true;
@@ -203,11 +203,11 @@ class PWA {
 
 		if($wgPWAConfigs) { // If the admin did set a configuration.
 			foreach($wgPWAConfigs as $id => $config) {
-				$tags[] = "PWA-edit-$id"; // Add an edit tag for each PWA.
+				$tags[] = "pwa-edit-$id"; // Add an edit tag for each PWA.
 			}
 		}
 
-		$tags[] = 'PWA-edit';
+		$tags[] = 'pwa-edit';
 
 		return true;
 	}

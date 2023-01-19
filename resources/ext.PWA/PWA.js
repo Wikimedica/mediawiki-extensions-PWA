@@ -38,7 +38,7 @@ if(!navigator.standalone || // Safari
 
         // Cannot install the app from the Facebook browser.
         if((ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1)) {
-            alert(mw.message("PWA-install-from-FB-not-allowed", mw.config.get("wgCurrentInstallablePWAName"), window.location.href));
+            alert(mw.message("pwa-install-from-FB-not-allowed", mw.config.get("wgCurrentInstallablePWAName"), window.location.href));
 
             return false;
         }    
@@ -50,7 +50,7 @@ if(!navigator.standalone || // Safari
             return false;
         }*/
         if(id != mw.config.get("wgCurrentInstallablePWAId")){
-            alert(mw.message("PWA-cannot-install", mw.config.get("wgCurrentInstallablePWAName")));
+            alert(mw.message("pwa-cannot-install", mw.config.get("wgCurrentInstallablePWAName")));
 
             return false; // Cannot install.
         }
@@ -64,7 +64,7 @@ if(!navigator.standalone || // Safari
 
         /* Apple's mobile safari does not support native adding to homescreen. Instead, show the user a gif tell them how to add
         * the app manually to their home screen. */
-        overlay = $('<div id="pwa-overlay"><div id="pwa-overlay-text">'+ mw.message("PWA-add-to-home-screen", mw.config.get("wgCurrentInstallablePWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
+        overlay = $('<div id="pwa-overlay"><div id="pwa-overlay-text">'+ mw.message("pwa-add-to-home-screen", mw.config.get("wgCurrentInstallablePWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
         $('body').append(overlay);
 
         /* Safari does not care about the start_url parameter in the manifest. Instead, it used the current URL as the start URL.

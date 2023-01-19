@@ -1,12 +1,10 @@
 {
-    "PWA-extension-description": "Rend une installation MediaWiki compatible avec le standard [https://en.wikipedia.org/wiki/Progressive_web_application PWA].",
-    "PWA-install-prompt": "Installer l'application $1 ?",
-    "PWA-install-prompt-button-label": "Installer",
-    "PWA-add-to-home-screen": "Ajoutez $1 à votre écran d'accueil",
-    "PWA-cannot-install": "Vous pouvez seulement installer l'application $1 depuis cette page. Naviguez vers une autre page et essayez à nouveau.",
-    "PWA-install-from-FB-not-allowed": "Vous ne pouvez pas installer $1 depuis le navigateur de Facebook. Veuillez cliquer sur le menu en haut à droite et ouvrez ce lien avec votre navigateur par défaut.",
-    "tag-PWA-edit": "Modification par l'application mobile PWA",
-    "tag-PWA-edit-description": "Modifications faites par l'application mobile PWA.",
-    "PWA-invalid-pwa-id-title": "pwa-id invalide",
-    "PWA-invalid-pwa-id-message": "L'identificateur de la PWA est invalide. Avez-vous modifié manuellement l'URL de la requête? Pour corriger cette erreur, fermez l'application, retirez là de vos applications actives et réouvrez-la."
+    "pwa-extension-description": "Rend une installation MediaWiki compatible avec le standard [https://en.wikipedia.org/wiki/Progressive_web_application PWA].",
+    "pwa-add-to-home-screen": "Ajoutez $1 à votre écran d'accueil",
+    "pwa-cannot-install": "Vous pouvez seulement installer l'application $1 depuis cette page. Naviguez vers une autre page et essayez à nouveau.",
+    "pwa-install-from-FB-not-allowed": "Vous ne pouvez pas installer $1 depuis le navigateur de Facebook. Veuillez cliquer sur le menu en haut à droite et ouvrez ce lien avec votre navigateur par défaut.",
+    "tag-pwa-edit": "Modification par l'application mobile PWA",
+    "tag-pwa-edit-description": "Modifications faites par l'application mobile PWA.",
+    "pwa-invalid-pwa-id-title": "pwa-id invalide",
+    "pwa-invalid-pwa-id-message": "L'identificateur de la PWA est invalide. Avez-vous modifié manuellement l'URL de la requête? Pour corriger cette erreur, fermez l'application, retirez là de vos applications actives et réouvrez-la."
 }
