@@ -155,7 +155,7 @@ class PWA {
 
 					// Pass config parameters to mw.config so it can be fetched in JS.
 					$out->addJsConfigVars('wgCurrentInstallablePWAId', $id);
-					$pwaname = $manifest->name ?? null;
+					$pwaname = $manifest->name ?? null; // If a name for the app is defined in the manifest.
 					if ( $pwaname ) {
 						$out->addJsConfigVars('wgCurrentInstallablePWAName', $pwaname);
 					}
@@ -163,8 +163,8 @@ class PWA {
 					// Add some more metas.
 					$out->addHeadItem('mobile-web-app-capable', '<meta name="mobile-web-app-capable" content="yes" />');
 					$out->addHeadItem('apple-mobile-web-app-capable', '<meta name="apple-mobile-web-app-capable" content="yes" />');
-					$out->addHeadItem('application-name', '<meta name="application-name" content="'.$pwaname ?? $id.'">');
-					$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.$pwaname ?? $id.'">');
+					$out->addHeadItem('application-name', '<meta name="application-name" content="'.($pwaname ?? $id).'" />');
+					$out->addHeadItem('apple-mobile-web-app-title', '<meta name="apple-mobile-web-app-title" content="'.($pwaname ?? $id).'" />');
 
 					return; // Skip all other PWA configurations.
 				}
