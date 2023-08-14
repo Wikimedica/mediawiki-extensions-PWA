@@ -2,7 +2,7 @@
     "pwa-extension-description": "使MediaWiki实例兼容[https://zh.wikipedia.org/wiki/Progressive_web_application PWA]。",
     "pwa-add-to-home-screen": "将“$1”添加到主屏幕",
     "pwa-cannot-install": "您只能从这个页面安装“$1”。尝试前往其他页面，然后重试。",
-    "pwa-install-from-fb-not-allowed": "您无法在Facebook的浏览器中安装“$1”。请点击左上角的菜单按钮，使用您的默认浏览器打开此链接。",
+    "pwa-install-from-fb-not-allowed": "您无法在Facebook的浏览器中安装“$1”。请点击右上角的菜单按钮，使用您的默认浏览器打开此链接。",
     "tag-pwa-edit": "PWA移动应用编辑",
     "tag-pwa-edit-description": "来自PWA移动应用的编辑。",
     "pwa-invalid-pwa-id-title": "无效的pwa-id",
