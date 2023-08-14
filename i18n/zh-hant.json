@@ -1,0 +1,10 @@
+{
+    "pwa-extension-description": "使MediaWiki實例與[https://zh.wikipedia.org/wiki/Progressive_web_application PWA]相容。",
+    "pwa-add-to-home-screen": "將「$1」加到主畫面",
+    "pwa-cannot-install": "您只能從此頁面安裝「$1」。嘗試造訪其他頁面，然後再試一次。",
+    "pwa-install-from-fb-not-allowed": "您無法在Facebook的瀏覽器中安裝「$1」。請按右上角的選單按鈕，使用您的預設瀏覽器開啟此連結。",
+    "tag-pwa-edit": "PWA行動應用程式編輯",
+    "tag-pwa-edit-description": "PWA行動應用程式作出的編輯。",
+    "pwa-invalid-pwa-id-title": "無效的pwa-id",
+    "pwa-invalid-pwa-id-message": "PWA識別碼無效。您是否有手動修改URL的查詢字串？要解決這個問題，請先關閉應用程式，將其從最近使用程式中移除，然後重新開啟。"
+}
