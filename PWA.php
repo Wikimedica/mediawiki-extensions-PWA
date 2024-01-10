@@ -140,10 +140,21 @@ class PWA {
 					$icons = $manifest->icons ?? [];
 
 					if ( $icons[0] ?? false ) {
-						$icon = $icons[0]->src;
+						
+						$default = null;
 
-						// Set the apple-touch-icon (because iOS ignores the icon field in the manifest). Add it as a head item to avoid modification by other extensions.
-						$out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$icon.'" />');	
+						/* Set the apple-touch-icon (because iOS ignores the icon field in the manifest). Add it as a head item to avoid modification by other extensions. 
+						 * also uses PNG versions because iOS does not play well with SVG. */
+						foreach($icons as $icon){
+
+							if($icon->type != 'image/png') { continue; }
+							$default = $icon->src;
+
+							if($icon->sizes) { $out->addHeadItem('apple-touch-icon-'.$icon->sizes, '<link rel="apple-touch-icon" sizes="'.$icon->sizes.'" href="'.$icon->src.'" />'); }
+						}
+						
+						$default ? $out->addHeadItem('apple-touch-icon', '<link rel="apple-touch-icon" href="'.$default.'" />') : null; // Set a default apple-touch-icon with no size.
+
 						// All other apple-touch-icon link tags will be removed later on in onOutputPageAfterGetHeadLinksArray.
 					}
 					
