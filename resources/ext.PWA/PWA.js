@@ -64,7 +64,7 @@ if(!navigator.standalone || // Safari
 
         /* Apple's mobile safari does not support native adding to homescreen. Instead, show the user a gif tell them how to add
         * the app manually to their home screen. */
-        overlay = $('<div id="pwa-overlay"><div id="pwa-overlay-text">'+ mw.message("pwa-add-to-home-screen", mw.config.get("wgCurrentInstallablePWAName")) + '<br><img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
+        overlay = $('<div id="pwa-overlay"><div id="pwa-overlay-text">'+ mw.message("pwa-add-to-home-screen", mw.config.get("wgCurrentInstallablePWAName")) + '<img src ="' + mw.config.get('wgScriptPath')+'/extensions/PWA/resources/ext.PWA/iPhone.gif"/></div></div>');
         $('body').append(overlay);
 
         /* Safari does not care about the start_url parameter in the manifest. Instead, it used the current URL as the start URL.
