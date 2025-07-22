@@ -10,6 +10,7 @@
 
 namespace MediaWiki\Extension\PWA;
 
+use MediaWiki\Title\Title;
 use OOUI;
 
 /**
@@ -126,7 +127,7 @@ class PWA {
 
 					$manifestUrl = $config['manifest'];
 
-					if(!\Title::newFromText($manifestUrl, NS_MEDIAWIKI)->exists()) { // If the manifest pointed to by the config was not defined or does not exist.
+					if(!Title::newFromText($manifestUrl, NS_MEDIAWIKI)->exists()) { // If the manifest pointed to by the config was not defined or does not exist.
 						wfDebugLog( 'PWA', "$id PWA manifest does not exist." );
 						continue 2; // Skip that PWA.
 					}
