@@ -53,6 +53,10 @@
 		"PWAMobileSkin": {
 			"value": { "default": "Minerva" },
 			"description": "Skin used for the mobile version, set to false if there is no such skin."
+		},
+		"PWACacheMaxAge": {
+			"value": 86400,
+			"description": "How long (in seconds) CDNs and browsers may cache the manifest and standalone stylesheet fetched through action=raw. Set to 0 to disable caching."
 		}
 	},
 	"ExtensionMessagesFiles": {

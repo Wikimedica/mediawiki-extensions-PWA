@@ -49,16 +49,30 @@ class PWA {
 	 * @param OutputPage $out
 	 * @param Skin $skin
 	*/
+	/**
+	 * Build the smaxage/maxage query parameters appended to action=raw URLs
+	 * from $wgPWACacheMaxAge. Returns an empty string when caching is
+	 * disabled (0).
+	 *
+	 * @param \Config $config
+	 * @return string
+	 */
+	private static function cacheMaxAgeParams( $config ) {
+		$maxAge = (int)$config->get( 'PWACacheMaxAge' );
+
+		return $maxAge > 0 ? "&smaxage=$maxAge&maxage=$maxAge" : '';
+	}
+
 	public static function onBeforePageDisplay(&$out, &$skin) {
 		$globalConfig = $skin->getConfig();
 
 		// Add a specific CSS stylesheet in standalone (PWA) mode depending on wether the desktop or mobile skin is used.
-		// smaxage/maxage let CDNs and browsers cache the stylesheet; action=raw
-		// translates them into Cache-Control headers.
+		// $wgPWACacheMaxAge lets CDNs and browsers cache the stylesheet; action=raw
+		// translates smaxage/maxage into Cache-Control headers.
 		$out->addStyle(
 			$globalConfig->get( 'ScriptPath' ) .
 				'/index.php?title=MediaWiki:'.($skin->getSkinName() == $globalConfig->get( 'PWAMobileSkin' ) ?
-				'PWA-mobile.css': 'PWA-common.css').'&action=raw&ctype=text/css&smaxage=86400&maxage=86400', 'standalone');
+				'PWA-mobile.css': 'PWA-common.css').'&action=raw&ctype=text/css'.self::cacheMaxAgeParams($globalConfig), 'standalone');
 
 		// Register some JS and CSS for standalone mode. This code should be in the service worker but until I get a better grasp of how they work is will be included in every page.
 		$out->addModuleStyles('ext.PWA.standalone.css'); // Add the CSS before the JS is loaded.
@@ -136,10 +150,10 @@ class PWA {
 
 					$manifest = json_decode(wfMessage($manifestUrl)->text());
 
-					/* smaxage/maxage let CDNs and browsers cache the manifest (it is
-					 * fetched on every page view otherwise); action=raw translates
-					 * them into Cache-Control headers. */
-					$manifestUrl = $globalConfig->get( 'ScriptPath' ) .'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json&smaxage=86400&maxage=86400';
+					/* $wgPWACacheMaxAge lets CDNs and browsers cache the manifest (it
+					 * is fetched on every page view otherwise); action=raw translates
+					 * smaxage/maxage into Cache-Control headers. */
+					$manifestUrl = $globalConfig->get( 'ScriptPath' ) .'/index.php?title=MediaWiki:'.urlencode($manifestUrl).'&action=raw&ctype=text/json'.self::cacheMaxAgeParams($globalConfig);
 
 					$out->addHeadItem('pwa', '<link rel="manifest" href="'.$manifestUrl.'" data-PWA-id="'.htmlspecialchars($id).'" />');
 
